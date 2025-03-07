@@ -9,7 +9,7 @@ function App() {
     <>
     <BrowserRouter>
     <Menu />
-    <div className="bg-[#F0DFB1] min-h-screen font-itim p-1">
+    <div className="bg-[#F0DFB1] min-h-screen font-itim p-2 pt-0">
       <Routes>
         {/* Página principal de productos */}
         <Route path="/" element={<Inicio />} />
