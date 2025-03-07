@@ -1,7 +1,5 @@
 export {Users} from './Users'
 export {Books} from './Books'
 export {Inicio} from './Inicio'
-export {Loan} from './Loan' 
 export {Employee} from './Employee'
 export {Error404} from './Error404'
-export {User_Loan} from './User_Loan'
