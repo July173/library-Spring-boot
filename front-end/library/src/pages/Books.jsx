@@ -7,9 +7,13 @@ export const Books = ({ apiUrl }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    //hacemos una petición a la API
     fetch(apiUrl)
+    //convertimos la respuesta a JSON
       .then((res) => res.json())
+      //guardamos los datos en el estado
       .then((data) => setData(data))
+      //si hay un error lo mostramos en consola
       .catch((error) => console.error("Error al obtener datos:", error));
   }, [apiUrl]);
   apiUrl="http://localhost:5000/books";

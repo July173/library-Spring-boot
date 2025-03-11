@@ -1,11 +1,16 @@
 import React, { act } from "react";
 import actualizar from "../assets/img/actualizar.png";
 import eliminar from "../assets/img/eliminar.png";
+// Se recibe la data como prop
+// Se recorre la data y se muestra en pantalla
 const Card = ({ data }) => {
   return (
     <div className="w-64  bg-[#F2B78D] rounded-lg shadow-md">
       <div className="p-4 mb-4">
         {/* Recorre dinámicamente los datos sin nombres quemados */}
+        {/*el object.entries(data) recorre el objeto y lo convierte en un array de pares [clave, valor]
+        luego se recorre con map y se desestructura cada array en key y value
+        se muestra la key y el value en pantalla*/}
         {Object.entries(data).map(([key, value]) => (
           <p key={key} className="text-lg font-bold">
             {key}: <span className="font-normal">{value}</span>
