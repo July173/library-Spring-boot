@@ -1,10 +1,14 @@
 package com.sena.crud_basic.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+@Entity (name = "user_loan")
 public class user_loanDTO {
+    
+    
 // 🔑 Llave foránea hacia user
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)

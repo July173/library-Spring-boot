@@ -1,6 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import React from "react";
-import { Error404, Inicio, Employee, Books,Users } from "./pages"
+import { Error404, Inicio, Employee, Books,Users, Loan } from "./pages"
 import Menu from "./components/menu" 
 
 function App() {
@@ -16,6 +16,7 @@ function App() {
         {/* Detalles de un producto */}
         <Route path="/books" element={<Books />} />
         <Route path="/user" element={<Users />} />
+        <Route path="/loan" element={<Loan />} />
         <Route path="/employee" element={<Employee />} />
         {/* Página de error 404 */}
         <Route path="*" element={<Error404 />} />
