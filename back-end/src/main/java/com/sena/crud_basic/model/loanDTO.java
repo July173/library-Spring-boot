@@ -29,7 +29,17 @@ public class loanDTO {
     @JoinColumn(name = "id_employee", nullable = false) // Nombre de la columna FK en la base de datos
     private employeeDTO id_employee;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "id_book", nullable = false) // Nombre de la columna FK en la base de datos
+    private bookDTO id_book;
+
+    public bookDTO getId_book() {
+        return id_book;
+    }
+
+    public void setId_book(bookDTO id_book) {
+        this.id_book = id_book;
+    }
 
     public employeeDTO getId_employee() {
         return id_employee;

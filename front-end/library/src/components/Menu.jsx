@@ -27,7 +27,7 @@ const Menu = () => {
           } transition-transform duration-300 ease-in-out z-50`}
       >
         {/* Icono de cerrar */}
-        <div className="flex  p-4 mt-3 justify-end">
+        <div className="flex justify-end p-4 mt-3">
           <img
             src={closeIcon}
             alt="close menu"
@@ -47,7 +47,7 @@ const Menu = () => {
             }
             onClick={toggleMenu} // Cierra el menú al hacer clic
           >
-            Inicio
+            Home
           </NavLink>
           <NavLink
             to="/books"
@@ -80,9 +80,19 @@ const Menu = () => {
             }
             onClick={toggleMenu} // Cierra el menú al hacer clic
           >
-            Employee
+            Employees
           </NavLink>
-          
+          <NavLink
+            to="/loan"
+            className={({ isActive }) =>
+              isActive
+                ? "border-[#883429] border-b-2"
+                : "hover:text-gray-800 transition-colors"
+            }
+            onClick={toggleMenu} // Cierra el menú al hacer clic
+          >
+            Loans
+          </NavLink>
          
         </nav>
       </div>
