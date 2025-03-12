@@ -47,7 +47,7 @@ const Menu = () => {
             }
             onClick={toggleMenu} // Cierra el menú al hacer clic
           >
-            Inicio
+            Home
           </NavLink>
           <NavLink
             to="/books"
@@ -80,7 +80,7 @@ const Menu = () => {
             }
             onClick={toggleMenu} // Cierra el menú al hacer clic
           >
-            Employee
+            Employees
           </NavLink>
           <NavLink
             to="/loan"
@@ -91,7 +91,7 @@ const Menu = () => {
             }
             onClick={toggleMenu} // Cierra el menú al hacer clic
           >
-            Loan
+            Loans
           </NavLink>
          
         </nav>

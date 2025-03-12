@@ -2,6 +2,7 @@ import React from 'react'
 import buscar from "../assets/img/buscar.png";
 import Card from "../components/Card";
 import { useEffect, useState } from "react";
+import AddButton from "../components/AddButton";
 
 export const Employee = ({apiUrl}) => {
   const [data, setData] = useState([]);
@@ -17,7 +18,7 @@ export const Employee = ({apiUrl}) => {
   return (
     <div>
       <div className="text-5xl sm:text-7xl font-jacques text-white bg-[#883429] p-4 max-w-3xl w-full rounded-2xl text-center mx-auto">
-        Employee
+        Employees
       </div>
       <div className="mx-auto mt-5 rounded-lg max-w-[35rem] w-full bg-amber-50 h-8">
         <img
@@ -30,6 +31,9 @@ export const Employee = ({apiUrl}) => {
         {data.map((item, index) => (
           <Card key={index} data={item} />
         ))}
+      </div>
+      <div className="flex justify-center mt-4">
+      <AddButton onClick={""} text="Add Employee" />
       </div>
     </div>
   );

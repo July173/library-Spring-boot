@@ -2,6 +2,7 @@ import React from "react";
 import buscar from "../assets/img/buscar.png";
 import Card from "../components/Card";
 import { useEffect, useState } from "react";
+import AddButton from "../components/AddButton";
 
 export const Books = ({ apiUrl }) => {
   const [data, setData] = useState([]);
@@ -33,6 +34,9 @@ export const Books = ({ apiUrl }) => {
         {data.map((item, index) => (
           <Card key={index} data={item} />
         ))}
+      </div>
+      <div className="flex justify-center mt-4">
+      <AddButton onClick={""} text="Add book" />
       </div>
     </div>
   );

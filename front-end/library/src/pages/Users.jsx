@@ -2,9 +2,10 @@ import React from 'react'
 import buscar from "../assets/img/buscar.png";
 import Card from "../components/Card";
 import { useEffect, useState } from "react";
+import AddButton from "../components/AddButton";
 
 export const Users = ({apiUrl}) => {
-  connst [data, setData] = useState([]);
+  const [data, setData] = useState([]);
   
   useEffect(() => {
     fetch(apiUrl)
@@ -12,7 +13,7 @@ export const Users = ({apiUrl}) => {
       .then((data) => setData(data))
       .catch((error) => console.error("Error al obtener datos:", error));
   }, [apiUrl]);
-  apiUrl="http://localhost:5000/users";
+  apiUrl="http://localhost:5000/user";
   return (
     <div>
       <div className="text-5xl sm:text-7xl font-jacques text-white bg-[#883429] p-4 max-w-3xl w-full rounded-2xl text-center mx-auto">
@@ -29,6 +30,9 @@ export const Users = ({apiUrl}) => {
         {data.map((item, index) => (
           <Card key={index} data={item} />
         ))}
+      </div>
+      <div className="flex justify-center mt-4">
+      <AddButton onClick={""} text="Add User" />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import {BrowserRouter, Routes, Route} from "react-router-dom"
 import React from "react";
 import { Error404, Inicio, Employee, Books,Users, Loan } from "./pages"
-import Menu from "./components/menu" 
+import Menu  from "./components/Menu";
 
 function App() {
 
