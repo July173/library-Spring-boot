@@ -2,12 +2,19 @@ package com.sena.crud_basic.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity (name = "user_loan")
 public class user_loanDTO {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", length = 20 )
+    private int id_user_loan;
     
 // 🔑 Llave foránea hacia user
     @ManyToOne
