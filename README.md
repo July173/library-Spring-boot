@@ -21,6 +21,11 @@ npm install
 
 3. Inicia el servidor 
 npm start
-npm run dev 
+ingresar a la carpeta de front-end y luego a la carpeta de library
+ingresar siguietne comando: json-server --watch db.json --port 5000 para visualizar las tarjetas dinamicas con un json mientras se consume el back-end
+ desplegar front: npm run dev 
+
+Enlace de figma para mejor visualización:
+https://www.figma.com/design/tSqJbbLDzpMQOoX9ka12vE/java?node-id=0-1&t=IIH7Qs4jp0Ek5Nbh-1
 
 

@@ -1,85 +1,106 @@
 package com.sena.crud_basic.model;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity(name="book")
+@Entity(name = "book")
 public class bookDTO {
 
-@Id 
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name="id", length = 20)
-private int id_book;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", length = 20)
+    private int id_book;
 
-@Column(name="title", nullable = false, length = 255)
-private String title;
+    @Column(name = "title", nullable = false, length = 255)
+    private String title;
 
-@Column(name="author", nullable= false, length = 225)
-private String author;
+    @Column(name = "author", nullable = false, length = 225)
+    private String author;
 
-@Column(name="publisher", nullable= false, length = 225)
-private String publisher;
+    @Column(name = "publisher", nullable = false, length = 225)
+    private String publisher;
 
-@Column(name="general", nullable= false, length = 225)
-private String general;
+    @Column(name = "general", nullable = false, length = 225)
+    private String general;
 
-@Column(name="isbn", nullable= false, length = 13)
-private int isbn;
+    @Column(name = "isbn", nullable = false, length = 13)
+    private int isbn;
 
+    @Column(name = "status", nullable = false)
+    private int status;
 
-public int getId_book(){
-    return id_book;
-}
+    public int getId_book() {
+        return id_book;
+    }
 
-public void setId_book(int id_book){
-    this.id_book = id_book;
-}
+    public void setId_book(int id_book) {
+        this.id_book = id_book;
+    }
 
+    public String getTitle() {
+        return title;
+    }
 
-public String getTitle(){
-    return title;
-}
+    public void setTilte(String title) {
+        this.title = title;
+    }
 
-public void setTilte(String title){
-    this.title = title;
-}
+    public String getAuthor() {
+        return author;
+    }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-public String getAuthor(){
-    return author;
-}
-public void setAuthor(String author){
-    this.author = author;
-}
+    public String getPublisher() {
+        return publisher;
+    }
 
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
+    public String getGeneral() {
+        return general;
+    }
 
-public String getPublisher(){
-    return publisher;
-}
+    public void setGeneral(String general) {
+        this.general = general;
+    }
 
-public void setPublisher(String publisher){
-    this.publisher = publisher;
-}
+    public int getIsbn() {
+        return isbn;
+    }
 
+    public void setIsbn(int isbn) {
+        this.isbn = isbn;
+    }
 
-public String getGeneral(){
-    return general;
-}
+    public bookDTO() {
+    }
 
-public void setGeneral(String general){
-    this.general = general;
-}
+    public bookDTO(int id_book, String title, String author, String publisher, String general, int isbn, int status) {
+        this.id_book = id_book;
+        this.title = title;
+        this.author = author;
+        this.publisher = publisher;
+        this.general = general;
+        this.isbn = isbn;
+        this.status = status;
+    }
 
+    public int getStatus() {
+        return status;
+    }
 
-public int getIsbn(){
-    return isbn;
-}
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
-public void setIsbn(int isbn){
-    this.isbn = isbn;
-}
+    
 
 }
