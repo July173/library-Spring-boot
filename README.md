@@ -1,4 +1,5 @@
-Nombre del proyecto : library
+Nombre del proyecto : library.
+
 Este es un proyecto de una libreria donde se puede observar lo libros disponibles,  tambien mostrara empleados y los usuarios que tiene su prestamo donde se mirara el empleado que hizo el pestrado y el estado de este prestamo. Se podran eliminar, agregar o actualizar estos datos.
 
 tecnologias:
