@@ -21,6 +21,26 @@ private String position;
 @Column (name= "phone_number", nullable = false, length = 20)
 private String phone_number;
 
+@Column(name = "status", nullable = false)
+private int status;
+
+
+public int getId_employee() {
+    return id_employee;
+}
+
+public void setId_employee(int id_employee) {
+    this.id_employee = id_employee;
+}
+
+public int getStatus() {
+    return status;
+}
+
+public void setStatus(int status) {
+    this.status = status;
+}
+
 public String getName() {
     return name;
 }
@@ -48,6 +68,14 @@ public String getPhone_number() {
 
 public void setPhone_number(String phone_number) {
     this.phone_number = phone_number;
+}
+
+public employeeDTO(int id_employee, String name, String position, String phone_number, int status) {
+    this.id_employee = id_employee;
+    this.name = name;
+    this.position = position;
+    this.phone_number = phone_number;
+    this.status = status;
 }
 
 

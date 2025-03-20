@@ -24,6 +24,12 @@ public class loanDTO {
     @Column (name= "fecha_devolucion", nullable = false)
     private LocalDate fecha_devolucion;
 
+    @Column(name = "status", nullable = false)
+    private int status;
+
+
+   
+
     // 🔑 Llave foránea hacia la tabla Role
     @ManyToOne
     @JoinColumn(name = "id_employee", nullable = false) // Nombre de la columna FK en la base de datos
@@ -72,6 +78,23 @@ public class loanDTO {
 
     public void setFecha_prestamo(LocalDate fecha_prestamo) {
         this.fecha_prestamo = fecha_prestamo;
+    }
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public loanDTO(int id_loan, LocalDate fecha_prestamo, LocalDate fecha_devolucion, int status,
+            employeeDTO id_employee, bookDTO id_book) {
+        this.id_loan = id_loan;
+        this.fecha_prestamo = fecha_prestamo;
+        this.fecha_devolucion = fecha_devolucion;
+        this.status = status;
+        this.id_employee = id_employee;
+        this.id_book = id_book;
     }
 
    
