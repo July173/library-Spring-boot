@@ -12,10 +12,10 @@ public class employeeDTO {
 @Column(name= "id", length = 20)
 private int id_employee;
 
-@Column (name= "name", nullable = false, length = 255)
+@Column (name= "name", nullable = false, length = 30)
 private String name;
 
-@Column (name= "position", nullable = false, length = 255)
+@Column (name= "position", nullable = false, length = 30)
 private String position;
 
 @Column (name= "phone_number", nullable = false, length = 20)

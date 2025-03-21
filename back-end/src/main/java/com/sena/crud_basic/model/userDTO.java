@@ -23,10 +23,10 @@ public class userDTO {
 @Column(name="id", length = 20 )
 private int id_user;
 
-@Column(name="name", nullable = false,length = 255)
+@Column(name="name", nullable = false,length = 30)
 private String name;
 
-@Column(name="last_name", nullable = false,length = 255 )
+@Column(name="last_name", nullable = false,length = 30 )
 private String last_name;
 
 @Column(name="address",  nullable = false,length = 255)
@@ -37,6 +37,29 @@ private String phone_number;
 
 @Column(name="email", nullable = false,length = 120 )
 private String email;
+
+@Column(name = "status", nullable = false)
+    private int status;
+
+    
+public userDTO(int id_user, String name, String last_name, String address, String phone_number, String email,
+        int status) {
+    this.id_user = id_user;
+    this.name = name;
+    this.last_name = last_name;
+    this.address = address;
+    this.phone_number = phone_number;
+    this.email = email;
+    this.status = status;
+}
+
+public int getStatus() {
+    return status;
+}
+
+public void setStatus(int status) {
+    this.status = status;
+}
 
 // Getter y Setter para id_user
 public int getId_user() {
