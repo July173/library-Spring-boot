@@ -1,4 +1,6 @@
-Library
+📚 Library
+
+
 Este proyecto es una aplicación para una librería que permite visualizar los libros disponibles, gestionar empleados y administrar los préstamos realizados. Se podrá observar, por cada préstamo, el empleado que lo realizó y el estado del mismo. Además, se pueden eliminar, agregar o actualizar estos datos.
 
 Tecnologías
@@ -13,8 +15,8 @@ Tecnologías
 
 -Base de Datos:
    MySQL
-
-Cómo Desplegarlo:
+   
+🚀 Cómo desplegar el proyecto:
 
 1.Clonar el repositorio:
 
@@ -58,9 +60,8 @@ Esto te permitirá visualizar las tarjetas dinámicas con un JSON mientras se co
 Finalmente, ejecuta:
 npm run dev
 
-Enlace a Figma
+🎨 Diseño en Figma
 Para una mejor visualización del diseño, puedes consultar el siguiente enlace en Figma:
-
 https://www.figma.com/design/tSqJbbLDzpMQOoX9ka12vE/java?node-id=0-1&t=IIH7Qs4jp0Ek5Nbh-1
 
 
