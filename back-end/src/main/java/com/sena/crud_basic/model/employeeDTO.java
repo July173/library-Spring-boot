@@ -1,82 +1,77 @@
 package com.sena.crud_basic.model;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity(name="employee")
+@Entity(name = "employee")
 public class employeeDTO {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name= "id", length = 20)
-private int id_employee;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", length = 20)
+    private int id_employee;
 
-@Column (name= "name", nullable = false, length = 30)
-private String name;
+    @Column(name = "name", nullable = false, length = 30)
+    private String name;
 
-@Column (name= "position", nullable = false, length = 30)
-private String position;
+    @Column(name = "position", nullable = false, length = 30)
+    private String position;
 
-@Column (name= "phone_number", nullable = false, length = 20)
-private String phone_number;
+    @Column(name = "phone_number", nullable = false, length = 20)
+    private int phone_number;
 
-@Column(name = "status", nullable = false)
-private int status;
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
+    public int getId_employee() {
+        return id_employee;
+    }
 
-public int getId_employee() {
-    return id_employee;
-}
+    public void setId_employee(int id_employee) {
+        this.id_employee = id_employee;
+    }
 
-public void setId_employee(int id_employee) {
-    this.id_employee = id_employee;
-}
+    public String getName() {
+        return name;
+    }
 
-public int getStatus() {
-    return status;
-}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-public void setStatus(int status) {
-    this.status = status;
-}
+    // Getter y Setter para phone_number
+    public String getPosition() {
+        return position;
+    }
 
-public String getName() {
-    return name;
-}
+    public void setPosition(String position) {
+        this.position = position;
+    }
 
-public void setName(String name) {
-    this.name = name;
-}
+    public int getPhone_number() {
+        return phone_number;
+    }
 
+    public void setPhone_number(int phone_number) {
+        this.phone_number = phone_number;
+    }
 
+    public boolean isStatus() {
+        return status;
+    }
 
-// Getter y Setter para phone_number
-public String getPosition() {
-    return position;
-}
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
-public void setPosition(String position) {
-    this.position = position;
-}
-
-
-// Getter y Setter para phone_number
-public String getPhone_number() {
-    return phone_number;
-}
-
-public void setPhone_number(String phone_number) {
-    this.phone_number = phone_number;
-}
-
-public employeeDTO(int id_employee, String name, String position, String phone_number, int status) {
-    this.id_employee = id_employee;
-    this.name = name;
-    this.position = position;
-    this.phone_number = phone_number;
-    this.status = status;
-}
-
+    public employeeDTO(int id_employee, String name, String position, int phone_number, boolean status) {
+        this.id_employee = id_employee;
+        this.name = name;
+        this.position = position;
+        this.phone_number = phone_number;
+        this.status = status;
+    }
 
 }

@@ -8,44 +8,38 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-@Entity (name = "user_loan")
+@Entity(name = "user_loan")
 public class user_loanDTO {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", length = 20 )
+    @Column(name = "id", length = 20)
     private int id_user_loan;
-    
-// 🔑 Llave foránea hacia user
+
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private userDTO usuario;
+    @JoinColumn(name = "id_user", nullable = false)
+    private userDTO user;
 
-
-    public userDTO getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(userDTO usuario) {
-        this.usuario = usuario;
-    }
-
-    // 🔑 Llave foránea hacia prestamo
     @ManyToOne
-    @JoinColumn(name = "id_prestamo", nullable = false)
-    private loanDTO prestamo;
+    @JoinColumn(name = "id_loan", nullable = false)
+    private loanDTO loan;
 
-
-    public loanDTO getPrestamo() {
-        return prestamo;
-    }
-
-    public void setPrestamo(loanDTO prestamo) {
-        this.prestamo = prestamo;
-    }
-
-    @Column(name = "state", nullable = false, length = 255)
+    @Column(name = "state_loan", nullable = false, length = 255)
     private String state;
+
+    @Column(name = "status", nullable = false)
+    private boolean status;
+
+    @Column(name = "observations", length = 255, nullable = false)
+    private String observations;
+
+    public int getId_user_loan() {
+        return id_user_loan;
+    }
+
+    public void setId_user_loan(int id_user_loan) {
+        this.id_user_loan = id_user_loan;
+    }
 
     public String getState() {
         return state;
@@ -55,9 +49,6 @@ public class user_loanDTO {
         this.state = state;
     }
 
-    @Column(name = "observations", length = 255)
-    private String observations;
-
     public String getObservations() {
         return observations;
     }
@@ -65,5 +56,39 @@ public class user_loanDTO {
     public void setObservations(String observations) {
         this.observations = observations;
     }
-}
 
+    public userDTO getUser() {
+        return user;
+    }
+
+    public void setUser(userDTO user) {
+        this.user = user;
+    }
+
+    public loanDTO getLoan() {
+        return loan;
+    }
+
+    public void setLoan(loanDTO loan) {
+        this.loan = loan;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public user_loanDTO(int id_user_loan, userDTO user, loanDTO loan, String state, boolean status,
+            String observations) {
+        this.id_user_loan = id_user_loan;
+        this.user = user;
+        this.loan = loan;
+        this.state = state;
+        this.status = status;
+        this.observations = observations;
+    }
+
+}
