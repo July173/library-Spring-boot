@@ -23,14 +23,55 @@ public class bookDTO {
     @Column(name = "publisher", nullable = false, length = 225)
     private String publisher;
 
-    @Column(name = "general", nullable = false, length = 225)
-    private String general;
+    @Column(name = "description", nullable = false, length = 225)
+    private String description;
 
     @Column(name = "isbn", nullable = false, length = 13)
     private int isbn;
+    @Column(name = "stock", nullable = false)
+    private int stock;
 
     @Column(name = "status", nullable = false)
-    private int status;
+    private boolean status;
+
+    @Column(name = "state_book", nullable = false, length = 30)
+    private int state_book;
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public int getState_book() {
+        return state_book;
+    }
+
+    public void setState_book(int state_book) {
+        this.state_book = state_book;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
     public int getId_book() {
         return id_book;
@@ -64,14 +105,6 @@ public class bookDTO {
         this.publisher = publisher;
     }
 
-    public String getGeneral() {
-        return general;
-    }
-
-    public void setGeneral(String general) {
-        this.general = general;
-    }
-
     public int getIsbn() {
         return isbn;
     }
@@ -80,27 +113,17 @@ public class bookDTO {
         this.isbn = isbn;
     }
 
-    public bookDTO() {
-    }
-
-    public bookDTO(int id_book, String title, String author, String publisher, String general, int isbn, int status) {
+    public bookDTO(int id_book, String title, String author, String publisher, String description, int isbn, int stock,
+            boolean status, int state_book) {
         this.id_book = id_book;
         this.title = title;
         this.author = author;
         this.publisher = publisher;
-        this.general = general;
+        this.description = description;
         this.isbn = isbn;
+        this.stock = stock;
         this.status = status;
+        this.state_book = state_book;
     }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    
 
 }
