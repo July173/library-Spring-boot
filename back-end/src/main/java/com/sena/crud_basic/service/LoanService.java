@@ -23,7 +23,7 @@ public class LoanService {
         return ILoanRepository.findById(id).get();
     }
      public responseDTO save(loanDTO loan) {
-        if (loan.getFecha_prestamo().isAfter(LocalDate.now())){
+        if (loan.getDate_loan().isAfter(LocalDate.now())){
             responseDTO response = new responseDTO(
                     "Error",
                     "");

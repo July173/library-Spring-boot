@@ -40,7 +40,7 @@ public class userDTO {
     private String email;
 
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     // Getter y Setter para id_user
     public int getId_user() {
@@ -95,16 +95,16 @@ public class userDTO {
         this.phone_number = phone_number;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
     public userDTO(int id_user, String name, String last_name, String address, int phone_number, String email,
-            boolean status) {
+            int status) {
         this.id_user = id_user;
         this.name = name;
         this.last_name = last_name;

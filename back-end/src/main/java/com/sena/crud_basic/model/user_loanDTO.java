@@ -28,7 +28,7 @@ public class user_loanDTO {
     private String state;
 
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     @Column(name = "observations", length = 255, nullable = false)
     private String observations;
@@ -73,15 +73,15 @@ public class user_loanDTO {
         this.loan = loan;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public user_loanDTO(int id_user_loan, userDTO user, loanDTO loan, String state, boolean status,
+    public user_loanDTO(int id_user_loan, userDTO user, loanDTO loan, String state, int status,
             String observations) {
         this.id_user_loan = id_user_loan;
         this.user = user;

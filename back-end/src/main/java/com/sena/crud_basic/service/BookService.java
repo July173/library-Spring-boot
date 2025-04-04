@@ -53,7 +53,7 @@ public class BookService {
      * private int isbn;
      */
 
-    public responseDTO delete(int id) {
+    public responseDTO delete(int  id) {
         // IBookRepository.deleteById(id);
         bookDTO book = getBookById(id);
         book.setStatus(0);
@@ -62,6 +62,7 @@ public class BookService {
                 "OK",
                 "Se eliminó correctamente");
         return response;
+        
     }
 
 }

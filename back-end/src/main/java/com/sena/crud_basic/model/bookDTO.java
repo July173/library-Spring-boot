@@ -32,16 +32,27 @@ public class bookDTO {
     private int stock;
 
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     @Column(name = "state_book", nullable = false, length = 30)
     private int state_book;
+    
+    @Column(name = "url", nullable = false, length = 255)
+    private String url;
 
-    public boolean isStatus() {
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -114,7 +125,7 @@ public class bookDTO {
     }
 
     public bookDTO(int id_book, String title, String author, String publisher, String description, int isbn, int stock,
-            boolean status, int state_book) {
+            int status, int state_book, String url) {
         this.id_book = id_book;
         this.title = title;
         this.author = author;
@@ -124,6 +135,9 @@ public class bookDTO {
         this.stock = stock;
         this.status = status;
         this.state_book = state_book;
+        this.url = url;
     }
+
+
 
 }

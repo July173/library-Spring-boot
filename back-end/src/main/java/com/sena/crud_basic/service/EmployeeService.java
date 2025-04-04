@@ -1,4 +1,5 @@
 package com.sena.crud_basic.service;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,13 +9,14 @@ import com.sena.crud_basic.repository.IEmployeeRepository;
 
 @Service
 public class EmployeeService {
-    
+
     @Autowired
     private IEmployeeRepository IEmployeeRepository;
 
-    public List<employeeDTO> getAllEmployee(){
+    public List<employeeDTO> getAllEmployee() {
         return IEmployeeRepository.findAllEmployeeActive();
     }
+
     public List<employeeDTO> getFilterEmployee(String filter) {
         return IEmployeeRepository.search(filter);
     }
@@ -22,7 +24,8 @@ public class EmployeeService {
     public employeeDTO getEmployeeById(int id) {
         return IEmployeeRepository.findById(id).get();
     }
-   public responseDTO save(employeeDTO employee) {
+
+    public responseDTO save(employeeDTO employee) {
         if (employee.getName().length() < 1 || employee.getName().length() > 30) {
             responseDTO response = new responseDTO(
                     "Error",
@@ -51,6 +54,4 @@ public class EmployeeService {
         return response;
     }
 
-
-   
 }

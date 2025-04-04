@@ -28,7 +28,7 @@ public class loanDTO {
     private String state_loan;
 
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     @ManyToOne
     @JoinColumn(name = "id_employee", nullable = false) // Nombre de la columna FK en la base de datos
@@ -62,11 +62,11 @@ public class loanDTO {
         this.date_return = date_return;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -94,7 +94,7 @@ public class loanDTO {
         this.id_loan = id_loan;
     }
 
-    public loanDTO(int id_loan, LocalDate date_loan, LocalDate date_return, String state_loan, boolean status,
+    public loanDTO(int id_loan, LocalDate date_loan, LocalDate date_return, String state_loan, int status,
             employeeDTO id_employee, bookDTO id_book) {
         this.id_loan = id_loan;
         this.date_loan = date_loan;
