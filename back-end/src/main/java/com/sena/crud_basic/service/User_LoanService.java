@@ -19,10 +19,6 @@ public class User_LoanService {
         return IUser_LoanRepository.findById(id).get();
     }
 
-     public List<user_loanDTO> getFilterUserLoan(String filter) {
-        return IUser_LoanRepository.search(filter);
-    }
-
     public responseDTO save(user_loanDTO user_loan) {
       
 

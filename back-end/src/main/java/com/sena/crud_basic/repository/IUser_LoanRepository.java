@@ -11,7 +11,6 @@ public interface IUser_LoanRepository extends JpaRepository<user_loanDTO,Integer
      @Query("SELECT ul FROM user_loan ul WHERE ul.status=1")
     List<user_loanDTO> findAllUserLoanActive();
 
-    @Query("SELECT ul FROM user_loan ul WHERE ul.name LIKE %?1% ")
-    List<user_loanDTO> search(String filter);
+    
 
 }
