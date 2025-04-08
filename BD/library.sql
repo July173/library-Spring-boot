@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-04-2025 a las 21:34:30
+-- Tiempo de generación: 08-04-2025 a las 23:19:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -45,10 +45,14 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`id`, `status`, `stock`, `isbn`, `state_book`, `author`, `description`, `publisher`, `title`, `url`) VALUES
-(1, 1, 15, 1234567891023, 1, 'J.R.R. Tolkien', 'Una épica historia de fantasía.', 'Minotauro', 'El Señor de los Anillos', 'https://example.com/imagenes/libro.jpg'),
+(1, 0, 15, 1234567891023, 1, 'J.R.R. Tolkien', 'Una épica historia de fantasía.', 'Minotauro', 'El Señor de los Anillos', 'https://example.com/imagenes/libro.jpg'),
 (2, 1, 15, 4587567891045, 1, 'Mario Mendoza', 'De una gran escirtor colombiano', 'Planeta', 'Leer es resistir', 'https://imgur.com/oNBLabd'),
 (3, 1, 15, 4587567897854, 1, 'Mario Mendoza', 'De una gran escirtor colombiano', 'Planeta', 'Scorpio city', 'https://imgur.com/9b7T07o'),
-(4, 1, 15, 2587567891458, 1, 'Mario Mendoza', 'De una gran escirtor colombiano', 'Planeta', 'La melaconlia de los feos', 'https://imgur.com/PasfvA2');
+(4, 1, 15, 2587567891458, 1, 'Mario Mendoza', 'De una gran escirtor colombiano', 'Planeta', 'La melaconlia de los feos', 'https://imgur.com/PasfvA2'),
+(5, 1, 15, 2587567891453, 1, 'Mario Mendoza', 'De una gran escirtor colombiano', 'Planeta', 'Apocalipsis', 'https://imgur.com/EoS5SUe'),
+(6, 1, 15, 1458469145365, 1, 'Connor Hamilton', 'Es una historia sobre Jessica y Charles, dos personas atrapadas en un torbellino de emociones ', 'Planeta', 'Hasta que el Verano se Acabe', 'https://imgur.com/tafzhTj'),
+(7, 1, 15, 3458469145365, 1, 'Mario Mendoza', 'De una gran escritor colombiano ', 'Planeta', 'Satanas', 'https://imgur.com/ZspNqve'),
+(8, 1, 15, 1258469145365, 1, 'Mario Mendoza', 'De una gran escritor colombiano ', 'Planeta', 'Los hombres invisibles', 'https://imgur.com/ZspNqve');
 
 -- --------------------------------------------------------
 
@@ -58,11 +62,19 @@ INSERT INTO `book` (`id`, `status`, `stock`, `isbn`, `state_book`, `author`, `de
 
 CREATE TABLE `employee` (
   `id` int(11) NOT NULL,
-  `phone_number` int(11) NOT NULL,
+  `phone_number` bigint(20) NOT NULL,
   `status` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
   `position` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `employee`
+--
+
+INSERT INTO `employee` (`id`, `phone_number`, `status`, `name`, `position`) VALUES
+(1, 3125364789, 1, 'Juan Pérez', 'Administrador'),
+(2, 3235689741, 0, 'Camila Montes', 'Vendedora');
 
 -- --------------------------------------------------------
 
@@ -80,6 +92,15 @@ CREATE TABLE `loan` (
   `state_loan` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `loan`
+--
+
+INSERT INTO `loan` (`date_loan`, `date_return`, `id`, `id_book`, `id_employee`, `status`, `state_loan`) VALUES
+('2025-04-04', '2025-04-15', 1, 3, 1, 0, 'Active'),
+('2025-03-04', '2025-04-15', 2, 2, 1, 1, 'Active'),
+('2024-03-04', '2025-04-15', 3, 4, 1, 1, 'Active');
+
 -- --------------------------------------------------------
 
 --
@@ -88,13 +109,21 @@ CREATE TABLE `loan` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `phone_number` int(11) NOT NULL,
+  `phone_number` bigint(20) NOT NULL,
   `status` int(11) NOT NULL,
   `last_name` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL,
   `email` varchar(120) NOT NULL,
   `address` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (`id`, `phone_number`, `status`, `last_name`, `name`, `email`, `address`) VALUES
+(1, 3123456789, 0, 'Pérez', 'Juan', 'juan.perez@example.com', 'Calle 123 #45-67, Bogotá'),
+(2, 3123456789, 1, 'Pérez', 'Maria', 'juan.perez@example.com', 'Calle 123 #45-67, Bogotá');
 
 -- --------------------------------------------------------
 
@@ -110,6 +139,14 @@ CREATE TABLE `user_loan` (
   `observations` varchar(255) NOT NULL,
   `state_loan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `user_loan`
+--
+
+INSERT INTO `user_loan` (`id`, `id_loan`, `id_user`, `status`, `observations`, `state_loan`) VALUES
+(2, 1, 1, 0, 'Entrega realizada sin observaciones', 'Activo'),
+(3, 2, 1, 1, 'Entrega realizada sin observaciones', 'Activo');
 
 --
 -- Índices para tablas volcadas
@@ -157,31 +194,31 @@ ALTER TABLE `user_loan`
 -- AUTO_INCREMENT de la tabla `book`
 --
 ALTER TABLE `book`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `loan`
 --
 ALTER TABLE `loan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `user_loan`
 --
 ALTER TABLE `user_loan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
