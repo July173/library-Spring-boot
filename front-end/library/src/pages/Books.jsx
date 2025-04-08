@@ -30,14 +30,15 @@ export const Books = ({ apiUrl }) => {
           className="w-8 h-8 cursor-pointer sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-8 lg:h-8" // Clases responsivas
         />
       </div>
-      <div className="flex flex-wrap justify-center gap-4 p-2 mt-6">
+      <div className="flex justify-center mt-4">
+      <AddButton onClick={""} text="Add book" />
+      </div>
+      <div className="flex flex-wrap ml-16 gap-4 p-2 mt-6">
         {data.map((item, index) => (
           <Card key={index} data={item} />
         ))}
       </div>
-      <div className="flex justify-center mt-4">
-      <AddButton onClick={""} text="Add book" />
-      </div>
+      
     </div>
   );
 };

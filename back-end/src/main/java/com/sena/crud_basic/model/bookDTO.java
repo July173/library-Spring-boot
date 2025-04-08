@@ -27,34 +27,41 @@ public class bookDTO {
     private String description;
 
     @Column(name = "isbn", nullable = false, length = 13)
-    private int isbn;
+    private long isbn;
     @Column(name = "stock", nullable = false)
     private int stock;
 
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     @Column(name = "state_book", nullable = false, length = 30)
-    private int state_book;
+    private long state_book;
+    
+    @Column(name = "url", nullable = false, length = 255)
+    private String url;
 
-    public boolean isStatus() {
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public int getState_book() {
+    public long getState_book() {
         return state_book;
     }
 
     public void setState_book(int state_book) {
         this.state_book = state_book;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
@@ -105,16 +112,18 @@ public class bookDTO {
         this.publisher = publisher;
     }
 
-    public int getIsbn() {
+    public long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(int isbn) {
+    public void setIsbn(long isbn) {
         this.isbn = isbn;
     }
-
-    public bookDTO(int id_book, String title, String author, String publisher, String description, int isbn, int stock,
-            boolean status, int state_book) {
+ // ✅ Constructor vacío requerido por Hibernate
+    public bookDTO() {
+    }
+    public bookDTO(int id_book, String title, String author, String publisher, String description, long isbn, int stock,
+            int status, int state_book, String url) {
         this.id_book = id_book;
         this.title = title;
         this.author = author;
@@ -124,6 +133,9 @@ public class bookDTO {
         this.stock = stock;
         this.status = status;
         this.state_book = state_book;
+        this.url = url;
     }
+
+
 
 }

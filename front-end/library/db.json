@@ -1,32 +1,136 @@
 {
-    "books": [
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro B", "author": "Autor Y", "pages": 320 }
-    ],
-    "employee": [
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro B", "author": "Autor Y", "pages": 320 }
-    ],
-    "user": [
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro B", "author": "Autor Y", "pages": 320 }
-    ],
-    "loan": [
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro A", "author": "Autor X", "year": 2024 },
-      { "title": "Libro B", "author": "Autor Y", "pages": 320 }
-    ]
-  }
-  
+  "books": [
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024,
+      "url": "https://imgur.com/xs5Qg1q"
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024,
+      "url": "https://example.com/images/libroA2.jpg"
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024,
+      "url": "https://example.com/images/libroA3.jpg"
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024,
+      "url": "https://example.com/images/libroA4.jpg"
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024,
+      "url": "https://example.com/images/libroA5.jpg"
+    },
+    {
+      "Title": "Libro B",
+      "Author": "Autor Y",
+      "pages": 320,
+      "url": "https://example.com/images/libroB.jpg"
+    }
+  ],
+  "employee": [
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro B",
+      "Author": "Autor Y",
+      "pages": 320
+    }
+  ],
+  "user": [
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro B",
+      "Author": "Autor Y",
+      "pages": 320
+    }
+  ],
+  "loan": [
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro A",
+      "Author": "Autor X",
+      "Year": 2024
+    },
+    {
+      "Title": "Libro B",
+      "Author": "Autor Y",
+      "pages": 320
+    }
+  ]
+}

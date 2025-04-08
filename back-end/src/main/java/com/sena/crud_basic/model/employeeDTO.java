@@ -20,10 +20,10 @@ public class employeeDTO {
     private String position;
 
     @Column(name = "phone_number", nullable = false, length = 20)
-    private int phone_number;
+    private long phone_number;
 
     @Column(name = "status", nullable = false)
-    private boolean status;
+    private int status;
 
     public int getId_employee() {
         return id_employee;
@@ -50,28 +50,31 @@ public class employeeDTO {
         this.position = position;
     }
 
-    public int getPhone_number() {
+    public long getPhone_number() {
         return phone_number;
     }
 
-    public void setPhone_number(int phone_number) {
+    public void setPhone_number(long phone_number) {
         this.phone_number = phone_number;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public employeeDTO(int id_employee, String name, String position, int phone_number, boolean status) {
+    public employeeDTO(int id_employee, String name, String position, long phone_number, int status) {
         this.id_employee = id_employee;
         this.name = name;
         this.position = position;
         this.phone_number = phone_number;
         this.status = status;
+    }
+
+    public employeeDTO() {
     }
 
 }
