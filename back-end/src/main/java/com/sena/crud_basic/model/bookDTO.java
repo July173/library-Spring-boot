@@ -27,7 +27,7 @@ public class bookDTO {
     private String description;
 
     @Column(name = "isbn", nullable = false, length = 13)
-    private int isbn;
+    private long isbn;
     @Column(name = "stock", nullable = false)
     private int stock;
 
@@ -119,7 +119,9 @@ public class bookDTO {
     public void setIsbn(long isbn) {
         this.isbn = isbn;
     }
-
+ // ✅ Constructor vacío requerido por Hibernate
+    public bookDTO() {
+    }
     public bookDTO(int id_book, String title, String author, String publisher, String description, long isbn, int stock,
             int status, int state_book, String url) {
         this.id_book = id_book;

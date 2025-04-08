@@ -91,4 +91,7 @@ public class user_loanDTO {
         this.observations = observations;
     }
 
+    public user_loanDTO() {
+    }
+
 }

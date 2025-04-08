@@ -22,6 +22,11 @@ public class LoanService {
     public loanDTO getLoanById(int id){
         return ILoanRepository.findById(id).get();
     }
+
+    /*public List<loanDTO> getFilterLoan(String filter) {
+        return ILoanRepository.search(filter);
+    }*/
+    
      public responseDTO save(loanDTO loan) {
         if (loan.getDate_loan().isAfter(LocalDate.now())){
             responseDTO response = new responseDTO(

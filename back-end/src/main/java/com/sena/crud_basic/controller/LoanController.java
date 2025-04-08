@@ -41,7 +41,12 @@ public class LoanController {
         return new ResponseEntity<>(loan, HttpStatus.OK);
     }
 
-   
+   /*  @GetMapping("/search/{filter}")
+    public ResponseEntity<Object> search(@PathVariable String filter) {
+        List<loanDTO> ListLoan = loanService.getFilterLoan(filter);
+        return new ResponseEntity<>(ListLoan, HttpStatus.OK);
+    }*/
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteLoan(@PathVariable int id) {

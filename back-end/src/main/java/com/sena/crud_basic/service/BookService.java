@@ -33,17 +33,25 @@ public class BookService {
                     "El titulo debe tener una longitud entre 1 y 255 caracteres");
             return response;
         }
-
+    
+        // ✅ Validación de longitud del ISBN (13 dígitos exactos)
+        long isbn = book.getIsbn();
+        if (isbn < 1000000000000L || isbn > 9999999999999L) {
+            responseDTO response = new responseDTO(
+                    "Error",
+                    "El ISBN debe tener exactamente 13 dígitos");
+            return response;
+        }
+    
         // añadir las n condiciones
-
+    
         IBookRepository.save(book);
         responseDTO response = new responseDTO(
                 "OK",
                 "Se registró correctamente");
         return response;
-        // return true;
     }
-
+    
     /*
      * private int id_book;
      * private String title;

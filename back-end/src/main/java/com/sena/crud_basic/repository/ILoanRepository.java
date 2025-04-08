@@ -11,5 +11,6 @@ public interface ILoanRepository extends JpaRepository<loanDTO,Integer> {
     List<loanDTO> findAllLoanActive();
 
    
+
    
 }

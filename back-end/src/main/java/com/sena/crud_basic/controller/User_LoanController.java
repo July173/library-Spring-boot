@@ -40,7 +40,7 @@ public class User_LoanController {
         return new ResponseEntity<>(user_loan, HttpStatus.OK);
     }
 
-   
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUserLoan(@PathVariable int id) {
         responseDTO response = user_LoanService.delete(id);
         return new ResponseEntity<>(response, HttpStatus.OK);

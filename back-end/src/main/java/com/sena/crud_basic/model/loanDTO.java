@@ -105,4 +105,7 @@ public class loanDTO {
         this.id_book = id_book;
     }
 
+    public loanDTO() {
+    }
+
 }
