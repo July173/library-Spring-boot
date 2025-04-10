@@ -17,7 +17,7 @@ export const Books = ({ apiUrl }) => {
       //si hay un error lo mostramos en consola
       .catch((error) => console.error("Error al obtener datos:", error));
   }, [apiUrl]);
-  apiUrl="http://localhost:5000/books";
+  apiUrl="http://localhost:8080/api/v1/book/";
   return (
     <div>
       <div className="text-5xl sm:text-7xl font-jacques text-white bg-[#883429] p-4 max-w-3xl w-full rounded-2xl text-center mx-auto">
