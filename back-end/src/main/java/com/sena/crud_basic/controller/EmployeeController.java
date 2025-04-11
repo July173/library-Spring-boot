@@ -18,9 +18,9 @@ import com.sena.crud_basic.DTO.responseDTO;
 import com.sena.crud_basic.model.employeeDTO;
 import com.sena.crud_basic.service.EmployeeService;
 
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/v1/employee/")
+@RequestMapping("/api/v1/employee")
 
 public class EmployeeController {
 
@@ -41,7 +41,7 @@ public class EmployeeController {
         return new ResponseEntity<>(listEmployee, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Object> findByIdEmployee(@PathVariable int id) {
         employeeDTO employee = employeeService.getEmployeeById(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);

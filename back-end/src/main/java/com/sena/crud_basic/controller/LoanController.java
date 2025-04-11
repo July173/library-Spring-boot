@@ -17,7 +17,7 @@ import com.sena.crud_basic.DTO.responseDTO;
 import com.sena.crud_basic.model.loanDTO;
 import com.sena.crud_basic.service.LoanService;
 
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/v1/loan/")
 

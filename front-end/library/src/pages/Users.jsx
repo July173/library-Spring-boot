@@ -3,9 +3,14 @@ import buscar from "../assets/img/buscar.png";
 import Table from '../components/Table';
 import { useEffect, useState } from "react";
 import AddButton from "../components/AddButton";
+import ModalDelete from '../components/ModalDelete';
 
 export const Users = ({apiUrl}) => {
   const [data, setData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+    
   
   useEffect(() => {
     fetch(apiUrl)
@@ -14,6 +19,40 @@ export const Users = ({apiUrl}) => {
       .catch((error) => console.error("Error al obtener datos:", error));
   }, [apiUrl]);
   apiUrl="http://localhost:8080/api/v1/user/";
+
+  
+  const handleDeleteClick = (item) => {
+    console.log("Item recibido para eliminar:", item); // 👈 Esto te ayuda a ver si llega bien
+    setItemToDelete(item);
+    setShowModal(true);
+  };
+  
+
+  const confirmDelete = () => {
+    console.log("Eliminando ID:", itemToDelete.id_user);
+    console.log("URL DELETE:", `${apiUrl}${itemToDelete.id_user}`);
+  
+    fetch(`${apiUrl}${itemToDelete.id_user}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (res.ok) {
+          setData(data.filter((d) => d.id_user !== itemToDelete.id_user)); 
+          setSuccessMessage("User successfully deleted.");
+          setTimeout(() => setSuccessMessage(""), 3000); // Oculta el mensaje después de 3s
+        } else {
+          console.error("Error al eliminar.");
+        }
+        setShowModal(false);
+        setItemToDelete(null);
+      })
+      .catch((error) => {
+        console.error("Error en la eliminación:", error);
+        setShowModal(false);
+        setItemToDelete(null);
+      });
+  
+  };
   return (
     <div>
       <div className="text-5xl sm:text-7xl font-jacques text-white bg-[#883429] p-4 max-w-3xl w-full rounded-2xl text-center mx-auto">
@@ -30,11 +69,21 @@ export const Users = ({apiUrl}) => {
       <AddButton onClick={""} text="Add User" />
       </div>
       <div className="w-[97vw] p-2 mt-6">
-        
-          <Table data={data} />
-        
+
+      {successMessage && (
+        <p className=" font-semibold text-center mb-4 text-3xl">
+          {successMessage}
+        </p>
+      )}
+        <Table data={data} onDelete={handleDeleteClick} />
       </div>
-    
+     {/* Modal */}
+      <ModalDelete
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={confirmDelete}
+        item={itemToDelete}
+        />
     </div>
   );
 };

@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import buscar from "../assets/img/buscar.png";
 import Table from "../components/Table";
 import AddButton from "../components/AddButton";
+import ModalDelete from "../components/ModalDelete";
 
-// Función para formatear los encabezados de columna
-const camelToWords = (text) =>
-  text.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase());
+const apiUrl = "http://localhost:8080/api/v1/loan/";
 
 export const Loan = () => {
   const [mergedData, setMergedData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/user_loan/")
@@ -19,7 +21,7 @@ export const Loan = () => {
           const user = entry.user;
 
           return {
-            id: loan.id_loan,
+            id_loan: loan.id_loan,
             bookTitle: loan.id_book?.title || "N/A",
             author: loan.id_book?.author || "N/A",
             employeeName: loan.id_employee?.name || "N/A",
@@ -32,11 +34,38 @@ export const Loan = () => {
           };
         });
 
-        combined.sort((a, b) => a.id - b.id);
+        combined.sort((a, b) => a.id_loan - b.id_loan);
         setMergedData(combined);
       })
       .catch((err) => console.error("Error cargando datos:", err));
   }, []);
+
+  const handleDeleteClick = (item) => {
+    setItemToDelete(item);
+    setShowModal(true);
+  };
+
+  const confirmDelete = () => {
+    fetch(`${apiUrl}${itemToDelete.id_loan}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (res.ok) {
+          setMergedData(mergedData.filter((d) => d.id_loan !== itemToDelete.id_loan));
+          setSuccessMessage("Loan successfully deleted.");
+          setTimeout(() => setSuccessMessage(""), 3000);
+        } else {
+          console.error("Error al eliminar.");
+        }
+        setShowModal(false);
+        setItemToDelete(null);
+      })
+      .catch((error) => {
+        console.error("Error en la eliminación:", error);
+        setShowModal(false);
+        setItemToDelete(null);
+      });
+  };
 
   return (
     <div>
@@ -48,13 +77,24 @@ export const Loan = () => {
         <img src={buscar} alt="buscar" className="w-8 h-8 cursor-pointer" />
       </div>
 
-      <div className="flex justify-center mt-4">
-        <AddButton onClick={() => {}} text="Add Loan" />
+      <div className="flex justify-center mt-4 mb-4">
+        <AddButton onClick={() => { }} text="Add Loan" />
       </div>
 
-      <div className="w-[97vw] p-2 mt-6">
-        <Table data={mergedData} labelFormatter={camelToWords} />
-      </div>
+      {successMessage && (
+        <p className=" font-semibold text-center mb-4 text-3xl">
+          {successMessage}
+        </p>
+      )}
+
+      <Table data={mergedData} onDelete={handleDeleteClick}  />
+
+      <ModalDelete
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={confirmDelete}
+        item={itemToDelete}
+      />
     </div>
   );
 };
