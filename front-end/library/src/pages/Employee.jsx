@@ -3,13 +3,14 @@ import buscar from "../assets/img/buscar.png";
 import Table from "../components/Table";
 import AddButton from "../components/AddButton";
 import ModalDelete from "../components/ModalDelete";
+import AddForm from "../components/AddForm"; // Asegúrate de importar esto
 
 export const Employee = ({ apiUrl }) => {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
-
+  const [showForm, setShowForm] = useState(false); // <- Para mostrar formulario
 
   apiUrl = "http://localhost:8080/api/v1/employee/";
 
@@ -21,24 +22,19 @@ export const Employee = ({ apiUrl }) => {
   }, [apiUrl]);
 
   const handleDeleteClick = (item) => {
-    console.log("Item recibido para eliminar:", item); // 👈 Esto te ayuda a ver si llega bien
     setItemToDelete(item);
     setShowModal(true);
   };
 
-
   const confirmDelete = () => {
-    console.log("Eliminando ID:", itemToDelete.id_employee);
-    console.log("URL DELETE:", `${apiUrl}${itemToDelete.id_employee}`);
-  
     fetch(`${apiUrl}${itemToDelete.id_employee}`, {
       method: "DELETE",
     })
       .then((res) => {
         if (res.ok) {
-          setData(data.filter((d) => d.id_employee !== itemToDelete.id_employee)); 
-          setSuccessMessage("Employee successfully deleted.");
-          setTimeout(() => setSuccessMessage(""), 3000); // Oculta el mensaje después de 3s
+          setData(data.filter((d) => d.id_employee !== itemToDelete.id_employee));
+          setSuccessMessage("Empleado eliminado correctamente.");
+          setTimeout(() => setSuccessMessage(""), 3000);
         } else {
           console.error("Error al eliminar.");
         }
@@ -51,8 +47,13 @@ export const Employee = ({ apiUrl }) => {
         setItemToDelete(null);
       });
   };
-  
-  
+
+  const handleFormSuccess = (newEmployee) => {
+    setData([...data, newEmployee]);
+    setSuccessMessage("Empleado agregado correctamente.");
+    setTimeout(() => setSuccessMessage(""), 3000);
+    setShowForm(false);
+  };
 
   return (
     <div>
@@ -65,19 +66,35 @@ export const Employee = ({ apiUrl }) => {
       </div>
 
       <div className="flex justify-center mt-4">
-        <AddButton onClick={""} text="Add Employee" />
+        <AddButton onClick={() => setShowForm(true)} text="Add Employee" />
       </div>
+
       {successMessage && (
         <p className=" font-semibold text-center mb-4 text-3xl">
           {successMessage}
         </p>
       )}
 
+      {showForm && (
+        <div className="flex justify-center mt-4">
+          <AddForm
+            apiUrl={apiUrl}
+            fields={[
+              { name: "name", label: "Name", type: "text" },
+              { name: "position", label: "Position", type: "text" },
+              { name: "phone_number", label: "Phone Number", type: "number" },
+              { name: "status", label: "Status", type: "number" },
+            ]}
+            onSuccess={handleFormSuccess}
+            onClose={() => setShowForm(false)}
+          />
+        </div>
+      )}
+
       <div className="w-[97vw] p-2 mt-6">
         <Table data={data} onDelete={handleDeleteClick} />
       </div>
 
-      {/* Modal */}
       <ModalDelete
         isOpen={showModal}
         onClose={() => setShowModal(false)}

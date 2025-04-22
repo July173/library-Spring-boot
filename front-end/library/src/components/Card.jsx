@@ -4,6 +4,7 @@ import eliminar from "../assets/img/eliminar.png";
 
 const Card = ({ data, onDelete }) => {
   const hasImage = !!data.url;
+  
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleFlip = () => setIsFlipped(!isFlipped);
