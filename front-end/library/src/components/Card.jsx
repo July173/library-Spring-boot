@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import actualizar from "../assets/img/actualizar.png";
 import eliminar from "../assets/img/eliminar.png";
 
-const Card = ({ data, onDelete }) => {
+const Card = ({ data, onDelete, onEdit }) => {
   const hasImage = !!data.url;
-  
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleFlip = () => setIsFlipped(!isFlipped);
@@ -37,7 +36,8 @@ const Card = ({ data, onDelete }) => {
             {Object.entries(data).map(([key, value]) =>
               key.toLowerCase().startsWith("id") || key === "url" ? null : (
                 <p key={key} className="text-sm font-bold text-black mb-1">
-                  {formatKey(key)}: <span className="font-normal">{value}</span>
+                  {formatKey(key)}:{" "}
+                  <span className="font-normal">{value}</span>
                 </p>
               )
             )}
@@ -52,7 +52,13 @@ const Card = ({ data, onDelete }) => {
             >
               <img src={eliminar} alt="eliminar" className="w-6 h-6 sm:w-8 sm:h-8" />
             </button>
-            <button className="flex items-center justify-center w-1/2 py-2 text-white bg-[#CB6546]">
+            <button
+              className="flex items-center justify-center w-1/2 py-2 text-white bg-[#CB6546]"
+              onClick={(e) => {
+                e.stopPropagation(); // Evita que se voltee al hacer clic
+                onEdit(data); // Llama a la función que viene del padre
+              }}
+            >
               <img src={actualizar} alt="actualizar" className="w-6 h-6 sm:w-8 sm:h-8" />
             </button>
           </div>
@@ -61,6 +67,5 @@ const Card = ({ data, onDelete }) => {
     </div>
   );
 };
-
 
 export default Card;
