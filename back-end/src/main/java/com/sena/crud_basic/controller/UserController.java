@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sena.crud_basic.DTO.responseDTO;
 import com.sena.crud_basic.model.userDTO;
 import com.sena.crud_basic.service.UserService;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/user/")
 
 public class UserController {
 

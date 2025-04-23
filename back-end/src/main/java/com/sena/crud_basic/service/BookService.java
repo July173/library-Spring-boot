@@ -73,4 +73,25 @@ public class BookService {
         
     }
 
+    public responseDTO update(bookDTO book) {
+        IBookRepository.save(book);
+        responseDTO response = new responseDTO(
+                "OK",
+                "Se actualizó correctamente");
+        return response;
+    }
+    public responseDTO update(int id, bookDTO book) {
+        bookDTO bookUpdate = getBookById(id);
+        bookUpdate.setTilte(book.getTitle());
+        bookUpdate.setAuthor(book.getAuthor());
+        bookUpdate.setPublisher(book.getPublisher());
+        bookUpdate.setDescription(book.getDescription());
+        bookUpdate.setIsbn(book.getIsbn());
+        IBookRepository.save(bookUpdate);
+        responseDTO response = new responseDTO(
+                "OK",
+                "Se actualizó correctamente");
+        return response;
+    }
+
 }

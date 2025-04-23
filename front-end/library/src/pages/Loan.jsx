@@ -1,41 +1,138 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import buscar from "../assets/img/buscar.png";
-import Card from "../components/Card";
-import { useEffect, useState } from "react";
+import Table from "../components/Table";
 import AddButton from "../components/AddButton";
+import ModalDelete from "../components/ModalDelete";
+import AddForm from "../components/AddForm"; // Asegúrate de tenerlo
 
-export const Loan = ({ apiUrl }) => {
-  const [data, setData] = useState([]);
+const apiUrl = "http://localhost:8080/api/v1/loan/";
+
+export const Loan = () => {
+  const [mergedData, setMergedData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
-    fetch(apiUrl)
+    fetch("http://localhost:8080/api/v1/user_loan/")
       .then((res) => res.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error("Error al obtener datos:", error));
-  }, [apiUrl]);
-  apiUrl = "http://localhost:5000/loan";
+      .then((userLoanData) => {
+        const combined = userLoanData.map((entry) => {
+          const loan = entry.loan;
+          const user = entry.user;
+
+          return {
+            id_loan: loan.id_loan,
+            bookTitle: loan.id_book?.title || "N/A",
+            author: loan.id_book?.author || "N/A",
+            employeeName: loan.id_employee?.name || "N/A",
+            employeeRole: loan.id_employee?.position || "N/A",
+            userFullName: `${user?.name || "N/A"} ${user?.last_name || ""}`.trim(),
+            observations: entry.observations || "Sin observaciones",
+            dateLoan: loan.date_loan,
+            dateReturn: loan.date_return,
+            state: loan.state_loan,
+          };
+        });
+
+        combined.sort((a, b) => a.id_loan - b.id_loan);
+        setMergedData(combined);
+      })
+      .catch((err) => console.error("Error cargando datos:", err));
+  }, []);
+
+  const handleDeleteClick = (item) => {
+    setItemToDelete(item);
+    setShowModal(true);
+  };
+
+  const confirmDelete = () => {
+    fetch(`${apiUrl}${itemToDelete.id_loan}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        if (res.ok) {
+          setMergedData(mergedData.filter((d) => d.id_loan !== itemToDelete.id_loan));
+          setSuccessMessage("Loan successfully deleted.");
+          setTimeout(() => setSuccessMessage(""), 3000);
+        } else {
+          console.error("Error al eliminar.");
+        }
+        setShowModal(false);
+        setItemToDelete(null);
+      })
+      .catch((error) => {
+        console.error("Error en la eliminación:", error);
+        setShowModal(false);
+        setItemToDelete(null);
+      });
+  };
+
+  const handleFormSuccess = (newLoan) => {
+    setMergedData((prev) => [...prev, {
+      ...newLoan,
+      bookTitle: "Nuevo libro",
+      author: "Desconocido",
+      employeeName: "Nuevo empleado",
+      employeeRole: "Cargo desconocido",
+      userFullName: "Asignar",
+      observations: "Sin observaciones",
+      dateLoan: newLoan.date_loan,
+      dateReturn: newLoan.date_return,
+      state: newLoan.state_loan
+    }]);
+    setSuccessMessage("Loan agregado correctamente.");
+    setTimeout(() => setSuccessMessage(""), 3000);
+    setShowForm(false);
+  };
+
   return (
     <div>
       <div className="text-5xl sm:text-7xl font-jacques text-white bg-[#883429] p-4 max-w-3xl w-full rounded-2xl text-center mx-auto">
         Loans
       </div>
+
       <div className="mx-auto mt-5 rounded-lg max-w-[35rem] w-full bg-amber-50 h-8">
-        <img
-          src={buscar}
-          alt="buscar"
-          className="w-8 h-8 cursor-pointer sm:w-8 sm:h-8 md:w-8 md:h-8 lg:w-8 lg:h-8" // Clases responsivas
-        />
+        <img src={buscar} alt="buscar" className="w-8 h-8 cursor-pointer" />
       </div>
-      <div className="flex justify-center mt-4">
-        <AddButton onClick={""} text="Add Loan" />
+
+      <div className="flex justify-center mt-4 mb-4">
+        <AddButton onClick={() => setShowForm(true)} text="Add Loan" />
       </div>
-      <div className="flex flex-wrap ml-16  gap-4 p-2 mt-6">
-        {data.map((item, index) => (
-          <Card key={index} data={item} />
-        ))}
-      </div>
-      
+
+      {successMessage && (
+        <p className="font-semibold text-center mb-4 text-3xl">
+          {successMessage}
+        </p>
+      )}
+
+      {showForm && (
+        <div className="flex justify-center mt-4">
+          <AddForm
+            apiUrl={apiUrl}
+            fields={[
+              { name: "date_loan", label: "Date Loan", type: "date" },
+              { name: "date_return", label: "Date Return", type: "date" },
+              { name: "state_loan", label: "State", type: "text" },
+              { name: "status", label: "Status", type: "number" },
+              { name: "id_employee.id_employee", label: "Employee ID", type: "number" },
+              { name: "id_book.id_book", label: "Book ID", type: "number" },
+            ]}
+            onSuccess={handleFormSuccess}
+            onClose={() => setShowForm(false)}
+          />
+        </div>
+      )}
+
+      <Table data={mergedData} onDelete={handleDeleteClick} />
+
+      <ModalDelete
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={confirmDelete}
+        item={itemToDelete}
+      />
     </div>
   );
 };
-
