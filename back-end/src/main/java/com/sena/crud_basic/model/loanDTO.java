@@ -18,7 +18,7 @@ public class loanDTO {
     @Column(name = "id", length = 20)
     private int id_loan;
 
-    @Column(name = "date_loan", nullable = false)
+    @Column(name = "date_loan")
     private LocalDate date_loan;
 
     @Column(name = "date_return", nullable = false)
@@ -72,6 +72,10 @@ public class loanDTO {
 
     public bookDTO getId_book() {
         return id_book;
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     public void setId_book(bookDTO id_book) {

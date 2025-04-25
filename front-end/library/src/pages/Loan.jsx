@@ -3,8 +3,8 @@ import buscar from "../assets/img/buscar.png";
 import Table from "../components/Table";
 import AddButton from "../components/AddButton";
 import ModalDelete from "../components/ModalDelete";
-import AddForm from "../components/AddForm"; // Asegúrate de tenerlo
-
+import LoanUserForm from "../components/AddLoanForm";
+import ReloadButton from "../components/ReloadButton";
 const apiUrl = "http://localhost:8080/api/v1/loan/";
 
 export const Loan = () => {
@@ -42,6 +42,7 @@ export const Loan = () => {
       .catch((err) => console.error("Error cargando datos:", err));
   }, []);
 
+  
   const handleDeleteClick = (item) => {
     setItemToDelete(item);
     setShowModal(true);
@@ -86,6 +87,8 @@ export const Loan = () => {
     setTimeout(() => setSuccessMessage(""), 3000);
     setShowForm(false);
   };
+   
+  
 
   return (
     <div>
@@ -107,24 +110,14 @@ export const Loan = () => {
         </p>
       )}
 
-      {showForm && (
-        <div className="flex justify-center mt-4">
-          <AddForm
-            apiUrl={apiUrl}
-            fields={[
-              { name: "date_loan", label: "Date Loan", type: "date" },
-              { name: "date_return", label: "Date Return", type: "date" },
-              { name: "state_loan", label: "State", type: "text" },
-              { name: "status", label: "Status", type: "number" },
-              { name: "id_employee.id_employee", label: "Employee ID", type: "number" },
-              { name: "id_book.id_book", label: "Book ID", type: "number" },
-            ]}
-            onSuccess={handleFormSuccess}
-            onClose={() => setShowForm(false)}
-          />
-        </div>
-      )}
-
+{showForm && (
+  <div className="flex justify-center mt-4">
+    <LoanUserForm
+      onSuccess={handleFormSuccess}
+      onClose={() => setShowForm(false)}
+    />
+  </div>
+)}
       <Table data={mergedData} onDelete={handleDeleteClick} />
 
       <ModalDelete

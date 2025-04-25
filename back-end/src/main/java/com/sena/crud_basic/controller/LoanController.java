@@ -1,4 +1,6 @@
 package com.sena.crud_basic.controller;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,14 @@ public class LoanController {
     private LoanService loanService;
 
     @PostMapping("/")
-     public ResponseEntity<Object> registerLoan(
+    public ResponseEntity<Object> registerLoan(
             @RequestBody loanDTO loan) {
-        responseDTO response = loanService.save(loan);
+        loan.setDate_loan(LocalDate.now());
+        var response = loanService.save(loan);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-     @GetMapping("/")
+
+    @GetMapping("/")
     public ResponseEntity<Object> findAllLoan() {
         List<loanDTO> listLoan = loanService.getAllLoan();
         return new ResponseEntity<>(listLoan, HttpStatus.OK);
@@ -43,11 +47,11 @@ public class LoanController {
         return new ResponseEntity<>(loan, HttpStatus.OK);
     }
 
-   /*  @GetMapping("/search/{filter}")
-    public ResponseEntity<Object> search(@PathVariable String filter) {
-        List<loanDTO> ListLoan = loanService.getFilterLoan(filter);
-        return new ResponseEntity<>(ListLoan, HttpStatus.OK);
-    }*/
+  //  @GetMapping("/search/{filter}")
+  //  public ResponseEntity<Object> search(@PathVariable String filter) {
+     //   List<loanDTO> ListLoan = loanService.getFilterLoan(filter);
+        //return new ResponseEntity<>(ListLoan, HttpStatus.OK);
+    //}
 
 
     @DeleteMapping("/{id}")
@@ -55,4 +59,5 @@ public class LoanController {
         responseDTO response = loanService.delete(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 }

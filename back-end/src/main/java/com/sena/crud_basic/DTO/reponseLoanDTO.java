@@ -1,17 +1,28 @@
 package com.sena.crud_basic.DTO;
 
+import com.sena.crud_basic.model.loanDTO;
 
-public class responseDTO {
-
-    private String status;
+public class reponseLoanDTO {
+  private String status;
     private String message;
+    private loanDTO loan;
 
-    public responseDTO(String status, String message) {
-        this.status = status;
-        this.message = message;
+    public loanDTO getLoan() {
+        return loan;
     }
 
-    public responseDTO() {
+    public void setLoan(loanDTO loan) {
+        this.loan = loan;
+    }
+
+   
+    public reponseLoanDTO(String status, String message, loanDTO loan) {
+        this.status = status;
+        this.message = message;
+        this.loan = loan;
+    }
+
+    public reponseLoanDTO() {
     }
 
     public String getStatus() {
