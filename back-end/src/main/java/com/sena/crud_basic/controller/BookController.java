@@ -31,6 +31,8 @@ public class BookController {
     @PostMapping("/")
     public ResponseEntity<Object> registerBook(
             @RequestBody bookDTO book) {
+            book.setStatus(1); // Activo por defecto
+            book.setState_book(1); // Disponible por defecto
         responseDTO response = bookService.save(book);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

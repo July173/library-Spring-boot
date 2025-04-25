@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sena.crud_basic.DTO.responseDTO;
+import com.sena.crud_basic.model.bookDTO;
 import com.sena.crud_basic.model.userDTO;
+import com.sena.crud_basic.repository.IBookRepository;
 import com.sena.crud_basic.repository.IUserRepository;
 
 @Service
@@ -52,6 +54,19 @@ public class UserService {
         responseDTO response = new responseDTO(
                 "OK",
                 "Se eliminó correctamente");
+        return response;
+    }
+     public responseDTO update(int id, userDTO user) {
+        userDTO userUpdate = getUserById(id);
+       userUpdate.setName(user.getName());
+       userUpdate.setLast_name(user.getLast_name());
+       userUpdate.setAddress(user.getAddress());
+       userUpdate.setPhone_number(user.getPhone_number());
+       userUpdate.setEmail(user.getEmail());
+        IUserRepository.save(userUpdate);
+        responseDTO response = new responseDTO(
+                "OK",
+                "Se actualizó correctamente");
         return response;
     }
 }

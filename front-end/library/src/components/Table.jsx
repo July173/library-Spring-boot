@@ -18,22 +18,16 @@ const Table = ({ data, onEdit, onDelete }) => {
 
   return (
     <div className="overflow-x-auto shadow-md rounded-lg">
-      {/* Tabla visible en pantallas medianas y grandes */}
       <table className="table-auto w-full border-collapse border border-gray-400 bg-white hidden sm:table">
         <thead className="bg-[#F2B78D]">
           <tr>
             <th className="border border-gray-400 px-4 py-2 font-bold text-black text-left">#</th>
             {headers.map((key) => (
-              <th
-                key={key}
-                className="border border-gray-400 px-4 py-2 font-bold text-black text-left"
-              >
+              <th key={key} className="border border-gray-400 px-4 py-2 font-bold text-black text-left">
                 {formatHeader(key)}
               </th>
             ))}
-            <th className="border border-gray-400 px-4 py-2 font-bold text-black text-left">
-              Opciones
-            </th>
+            <th className="border border-gray-400 px-4 py-2 font-bold text-black text-left">Opciones</th>
           </tr>
         </thead>
         <tbody>
@@ -41,28 +35,17 @@ const Table = ({ data, onEdit, onDelete }) => {
             <tr key={idx} className="hover:bg-gray-100">
               <td className="border border-gray-300 px-4 py-2">{idx + 1}</td>
               {headers.map((key) => (
-                <td
-                  key={key}
-                  className="border border-gray-300 px-4 py-2 text-sm text-gray-800"
-                >
+                <td key={key} className="border border-gray-300 px-4 py-2 text-sm text-gray-800">
                   {item[key]}
                 </td>
               ))}
               <td className="border border-gray-300 px-4 py-2">
                 <div className="flex gap-2">
                   <button onClick={() => onDelete && onDelete(item)}>
-                    <img
-                      src={eliminar}
-                      alt="eliminar"
-                      className="w-6 h-6 hover:scale-110 transition-transform"
-                    />
+                    <img src={eliminar} alt="eliminar" className="w-6 h-6 hover:scale-110 transition-transform" />
                   </button>
                   <button onClick={() => onEdit && onEdit(item)}>
-                    <img
-                      src={actualizar}
-                      alt="actualizar"
-                      className="w-6 h-6 hover:scale-110 transition-transform"
-                    />
+                    <img src={actualizar} alt="actualizar" className="w-6 h-6 hover:scale-110 transition-transform" />
                   </button>
                 </div>
               </td>
@@ -78,24 +61,15 @@ const Table = ({ data, onEdit, onDelete }) => {
             <div className="text-sm font-bold mb-2">#{idx + 1}</div>
             {headers.map((key) => (
               <div key={key} className="text-sm mb-1">
-                <span className="font-semibold">{formatHeader(key)}:</span>{" "}
-                {item[key]}
+                <span className="font-semibold">{formatHeader(key)}:</span> {item[key]}
               </div>
             ))}
             <div className="flex gap-2 mt-2">
               <button onClick={() => onDelete && onDelete(item)}>
-                <img
-                  src={eliminar}
-                  alt="eliminar"
-                  className="w-6 h-6 hover:scale-110 transition-transform"
-                />
+                <img src={eliminar} alt="eliminar" className="w-6 h-6 hover:scale-110 transition-transform" />
               </button>
               <button onClick={() => onEdit && onEdit(item)}>
-                <img
-                  src={actualizar}
-                  alt="actualizar"
-                  className="w-6 h-6 hover:scale-110 transition-transform"
-                />
+                <img src={actualizar} alt="actualizar" className="w-6 h-6 hover:scale-110 transition-transform" />
               </button>
             </div>
           </div>

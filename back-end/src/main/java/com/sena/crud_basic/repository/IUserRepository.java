@@ -10,6 +10,6 @@ public interface IUserRepository extends JpaRepository<userDTO,Integer> {
     @Query("SELECT u FROM user u WHERE u.status=1")
     List<userDTO> findAllUserActive();
 
-    @Query("SELECT u FROM user u WHERE u.name LIKE %?1% ")
+    @Query("SELECT u FROM user u WHERE u.name LIKE %?1%OR u.last_name LIKE %?1%")
     List<userDTO> search(String filter);
 }

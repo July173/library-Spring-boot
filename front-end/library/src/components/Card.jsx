@@ -59,7 +59,7 @@ const Card = ({ data, onDelete, onEdit }) => {
                 onEdit(data); // Llama a la función que viene del padre
               }}
             >
-              <img src={actualizar} alt="actualizar" className="w-6 h-6 sm:w-8 sm:h-8" />
+              <img src={actualizar} alt="actualizar" className="w-6 h-6 sm:w-8 sm:h-8 cursor-pointer" />
             </button>
           </div>
         </div>
