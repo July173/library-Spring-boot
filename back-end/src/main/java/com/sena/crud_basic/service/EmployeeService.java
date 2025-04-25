@@ -54,4 +54,16 @@ public class EmployeeService {
         return response;
     }
 
+    public responseDTO update(int id, employeeDTO employee) {
+        employeeDTO employeeUpdate = getEmployeeById(id);
+        employeeUpdate.setName(employee.getName());
+        employeeUpdate.setPhone_number(employee.getPhone_number());
+        employeeUpdate.setPosition(employee.getPosition());
+        IEmployeeRepository.save(employeeUpdate);
+        responseDTO response = new responseDTO(
+                "OK",
+                "Se actualizó correctamente");
+        return response;
+    }
+
 }

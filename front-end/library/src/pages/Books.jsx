@@ -3,8 +3,9 @@ import Card from "../components/Card";
 import AddButton from "../components/AddButton";
 import ModalDelete from "../components/ModalDelete";
 import AddForm from "../components/AddForm";
-import UpdateForm from "../components/UpdateForm"; 
+import UpdateForm from "../components/UpdateForm";
 import SearchFilter from "../components/SearchFilter";
+import ReloadButton from "../components/ReloadButton"; // Importa el botón de recarga
 
 export const Books = () => {
   const apiUrl = "http://localhost:8080/api/v1/book/";
@@ -49,6 +50,10 @@ export const Books = () => {
     setItemToDelete(item);
     setShowModal(true);
   };
+  // Función para recargar la página y hacer fetch a la API
+  const handleReload = () => {
+    fetchData(); // Recarga los datos desde la API
+  };
 
   const confirmDelete = () => {
     // Verifica que el id esté siendo recibido correctamente
@@ -85,14 +90,14 @@ export const Books = () => {
     setItemToUpdate(item);
     setShowUpdateForm(true);
   };
-  
 
 
- // Función para manejar el filtro
- const handleFilter = (filteredData) => {
-  setMergedData(filteredData); // Actualizamos los datos con los resultados del filtro
 
-};
+  // Función para manejar el filtro
+  const handleFilter = (filteredData) => {
+    setMergedData(filteredData); // Actualizamos los datos con los resultados del filtro
+
+  };
 
   return (
     <div>
@@ -100,8 +105,8 @@ export const Books = () => {
         Books
       </div>
 
-       {/* Componente para el filtro de búsqueda */}
-       <SearchFilter apiUrl={apiUrl} onFilter={handleFilter} />
+      {/* Componente para el filtro de búsqueda */}
+      <SearchFilter apiUrl={apiUrl} onFilter={handleFilter} />
 
       <div className="flex justify-center mt-4">
         <AddButton onClick={() => setShowAddForm(!showAddForm)} text="Add book" />
@@ -124,9 +129,13 @@ export const Books = () => {
       )}
 
       {successMessage && (
-        <div className="text-green-600 text-center mt-4">{successMessage}</div>
+        <div className="text-green-700 text-center mt-4">{successMessage}</div>
       )}
 
+      {/* Usando el componente ReloadButton */}
+      <div className="flex justify-center mt-4">
+        <ReloadButton onReload={handleReload} />
+      </div>
       <div className="flex flex-wrap ml-16 gap-4 p-2 mt-6">
         {mergedData.length === 0 ? (
           <p className="text-center text-gray-500 text-lg w-full">
