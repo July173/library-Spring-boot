@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sena.crud_basic.DTO.responseDTO;
 import com.sena.crud_basic.model.employeeDTO;
+import com.sena.crud_basic.model.userDTO;
 import com.sena.crud_basic.service.EmployeeService;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -30,6 +32,7 @@ public class EmployeeController {
     @PostMapping("/")
     public ResponseEntity<Object> registerEmployee(
             @RequestBody employeeDTO employee) {
+                employee.setStatus(1); // Activo por defecto
             responseDTO response = employeeService.save(employee);
         return new ResponseEntity<>(response, HttpStatus.OK);
 
@@ -56,6 +59,12 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteEmployee(@PathVariable int id) {
         responseDTO response = employeeService.delete(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+     @PutMapping("/{id}")
+    public ResponseEntity<Object> updateEmployee(@PathVariable int id, @RequestBody employeeDTO employee) {
+        responseDTO response = employeeService.update(id, employee);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

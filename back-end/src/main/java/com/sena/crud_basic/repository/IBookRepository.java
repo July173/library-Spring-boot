@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.sena.crud_basic.model.bookDTO;
 
 public interface IBookRepository extends JpaRepository<bookDTO, Integer> {
+@CrossOrigin(origins = "http://localhost:5173")
 
     @Query("SELECT b FROM book b WHERE b.status=1")
     List<bookDTO> findAllBookActive();

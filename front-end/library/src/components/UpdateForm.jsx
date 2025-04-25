@@ -44,8 +44,10 @@ const UpdateForm = ({ apiUrl, fields, item, idKey = "id", onSuccess, onCancel })
             required={field.required}
             value={formData[field.name] || ""}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            disabled={field.disabled}
+            className="w-full p-2 border border-gray-300 rounded bg-white disabled:opacity-70"
           />
+
         </div>
       ))}
       <div className="flex justify-end space-x-4">

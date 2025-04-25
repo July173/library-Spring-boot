@@ -1,25 +1,47 @@
 import React, { useEffect, useState } from "react";
-import buscar from "../assets/img/buscar.png";
 import Table from "../components/Table";
 import AddButton from "../components/AddButton";
 import ModalDelete from "../components/ModalDelete";
-import AddForm from "../components/AddForm"; // Asegúrate de importar esto
+import AddForm from "../components/AddForm";
+import ReloadButton from "../components/ReloadButton";
+import UpdateForm from "../components/UpdateForm";
+import SearchFilter from "../components/SearchFilter";
 
-export const Employee = ({ apiUrl }) => {
+export const Employee = () => {
   const [data, setData] = useState([]);
+  const [mergedData, setMergedData] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [itemToUpdate, setItemToUpdate] = useState(null);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
-  const [showForm, setShowForm] = useState(false); // <- Para mostrar formulario
+  const [showForm, setShowForm] = useState(false);
 
-  apiUrl = "http://localhost:8080/api/v1/employee/";
+  const apiUrl = "http://localhost:8080/api/v1/employee/";
 
-  useEffect(() => {
+  const fields = [
+    { name: "name", label: "Name", required: true },
+    { name: "position", label: "Position", required: true },
+    { name: "phone_number", label: "Phone Number", type: "number", required: true },
+  ];
+
+  const fetchData = () => {
     fetch(apiUrl)
       .then((res) => res.json())
-      .then((data) => setData(data))
+      .then((data) => {
+        setData(data);
+        setMergedData(data);
+      })
       .catch((error) => console.error("Error al obtener datos:", error));
-  }, [apiUrl]);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleReload = () => {
+    fetchData();
+  };
 
   const handleDeleteClick = (item) => {
     setItemToDelete(item);
@@ -49,10 +71,20 @@ export const Employee = ({ apiUrl }) => {
   };
 
   const handleFormSuccess = (newEmployee) => {
-    setData([...data, newEmployee]);
+    const employeeWithStatus = { ...newEmployee, status: 1 };
+    setData([...data, employeeWithStatus]);
     setSuccessMessage("Empleado agregado correctamente.");
     setTimeout(() => setSuccessMessage(""), 3000);
     setShowForm(false);
+  };
+
+  const handleEditClick = (item) => {
+    setItemToUpdate(item);
+    setShowUpdateForm(true);
+  };
+
+  const handleFilter = (filteredData) => {
+    setMergedData(filteredData);
   };
 
   return (
@@ -61,16 +93,14 @@ export const Employee = ({ apiUrl }) => {
         Employees
       </div>
 
-      <div className="mx-auto mt-5 rounded-lg max-w-[35rem] w-full bg-amber-50 h-8">
-        <img src={buscar} alt="buscar" className="w-8 h-8 cursor-pointer" />
-      </div>
+      <SearchFilter apiUrl={apiUrl} onFilter={handleFilter} />
 
       <div className="flex justify-center mt-4">
         <AddButton onClick={() => setShowForm(true)} text="Add Employee" />
       </div>
 
       {successMessage && (
-        <p className=" font-semibold text-center mb-4 text-3xl">
+        <p className="font-semibold text-center mb-4 text-3xl">
           {successMessage}
         </p>
       )}
@@ -79,20 +109,23 @@ export const Employee = ({ apiUrl }) => {
         <div className="flex justify-center mt-4">
           <AddForm
             apiUrl={apiUrl}
-            fields={[
-              { name: "name", label: "Name", type: "text" },
-              { name: "position", label: "Position", type: "text" },
-              { name: "phone_number", label: "Phone Number", type: "number" },
-              { name: "status", label: "Status", type: "number" },
-            ]}
+            fields={fields}
             onSuccess={handleFormSuccess}
             onClose={() => setShowForm(false)}
           />
         </div>
       )}
 
+      <div className="flex justify-center mt-4">
+        <ReloadButton onReload={handleReload} />
+      </div>
+
       <div className="w-[97vw] p-2 mt-6">
-        <Table data={data} onDelete={handleDeleteClick} />
+        <Table
+          data={mergedData}
+          onDelete={handleDeleteClick}
+          onEdit={handleEditClick}
+        />
       </div>
 
       <ModalDelete
@@ -101,6 +134,29 @@ export const Employee = ({ apiUrl }) => {
         onConfirm={confirmDelete}
         item={itemToDelete}
       />
+
+      {showUpdateForm && itemToUpdate && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+            <h2 className="text-xl font-bold mb-4">Actualizar Empleado</h2>
+            <UpdateForm
+              apiUrl={apiUrl}
+              fields={fields}
+              item={{ ...itemToUpdate, status: 1 }}
+              idKey="id_employee"
+              onSuccess={() => {
+                fetchData();
+                setShowUpdateForm(false);
+                setItemToUpdate(null);
+              }}
+              onCancel={() => {
+                setShowUpdateForm(false);
+                setItemToUpdate(null);
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
