@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import buscar from "../assets/img/buscar.png";
 import Table from "../components/Table";
 import AddButton from "../components/AddButton";
 import ModalDelete from "../components/ModalDelete";
 import LoanUserForm from "../components/AddLoanForm";
-import ReloadButton from "../components/ReloadButton";
+import SearchFilter from "../components/SearchFilterLoan";
+import ReloadButton from "../components/ReloadButton";  // Importamos el ReloadButton
+
 const apiUrl = "http://localhost:8080/api/v1/loan/";
 
 export const Loan = () => {
@@ -14,7 +15,8 @@ export const Loan = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [showForm, setShowForm] = useState(false);
 
-  useEffect(() => {
+  // Función para recargar los datos
+  const reloadData = () => {
     fetch("http://localhost:8080/api/v1/user_loan/")
       .then((res) => res.json())
       .then((userLoanData) => {
@@ -40,9 +42,18 @@ export const Loan = () => {
         setMergedData(combined);
       })
       .catch((err) => console.error("Error cargando datos:", err));
+  };
+
+  // Cargar los datos al montar el componente
+  useEffect(() => {
+    reloadData();
   }, []);
 
-  
+  // Manejar los resultados del filtro
+  const handleFilter = (filteredData) => {
+    setMergedData(filteredData); // Actualiza la tabla con los datos filtrados
+  };
+
   const handleDeleteClick = (item) => {
     setItemToDelete(item);
     setShowModal(true);
@@ -87,8 +98,6 @@ export const Loan = () => {
     setTimeout(() => setSuccessMessage(""), 3000);
     setShowForm(false);
   };
-   
-  
 
   return (
     <div>
@@ -96,12 +105,17 @@ export const Loan = () => {
         Loans
       </div>
 
-      <div className="mx-auto mt-5 rounded-lg max-w-[35rem] w-full bg-amber-50 h-8">
-        <img src={buscar} alt="buscar" className="w-8 h-8 cursor-pointer" />
-      </div>
+      <SearchFilter
+        apiUrl="http://localhost:8080/api/v1/loan/"
+        onFilter={handleFilter} // Pasamos la función para manejar el filtro
+      />
 
       <div className="flex justify-center mt-4 mb-4">
         <AddButton onClick={() => setShowForm(true)} text="Add Loan" />
+      </div>
+
+      <div className="flex justify-center mt-4 mb-4">
+        <ReloadButton onReload={reloadData} />
       </div>
 
       {successMessage && (
@@ -110,14 +124,14 @@ export const Loan = () => {
         </p>
       )}
 
-{showForm && (
-  <div className="flex justify-center mt-4">
-    <LoanUserForm
-      onSuccess={handleFormSuccess}
-      onClose={() => setShowForm(false)}
-    />
-  </div>
-)}
+      {showForm && (
+        <div className="flex justify-center mt-4">
+          <LoanUserForm
+            onSuccess={handleFormSuccess}
+            onClose={() => setShowForm(false)}
+          />
+        </div>
+      )}
       <Table data={mergedData} onDelete={handleDeleteClick} />
 
       <ModalDelete

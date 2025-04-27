@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sena.crud_basic.DTO.responseDTO;
@@ -47,11 +48,15 @@ public class LoanController {
         return new ResponseEntity<>(loan, HttpStatus.OK);
     }
 
-  //  @GetMapping("/search/{filter}")
-  //  public ResponseEntity<Object> search(@PathVariable String filter) {
-     //   List<loanDTO> ListLoan = loanService.getFilterLoan(filter);
-        //return new ResponseEntity<>(ListLoan, HttpStatus.OK);
-    //}
+  @GetMapping("/search")
+public ResponseEntity<Object> search(
+        @RequestParam String filter,
+        @RequestParam LocalDate startDate,
+        @RequestParam LocalDate endDate) {
+
+    List<loanDTO> listLoan = loanService.getFilterLoan(filter, startDate, endDate);
+    return new ResponseEntity<>(listLoan, HttpStatus.OK);
+}
 
 
     @DeleteMapping("/{id}")

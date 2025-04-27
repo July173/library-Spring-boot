@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sena.crud_basic.DTO.responseDTO;
-import com.sena.crud_basic.model.bookDTO;
+import com.sena.crud_basic.DTO.reponseLoanDTO;
 import com.sena.crud_basic.model.loanDTO;
 
 @Service
@@ -22,26 +22,27 @@ public class LoanService {
     public loanDTO getLoanById(int id){
         return ILoanRepository.findById(id).get();
     }
-
-    /*public List<loanDTO> getFilterLoan(String filter) {
-        return ILoanRepository.search(filter);
-    }*/
-    
-     public responseDTO save(loanDTO loan) {
+    public List<loanDTO> getFilterLoan(String filter, LocalDate startDate, LocalDate endDate) {
+        return ILoanRepository.search(filter, startDate, endDate);
+    }
+     public reponseLoanDTO save(loanDTO loan) {
         if (loan.getDate_loan().isAfter(LocalDate.now())){
-            responseDTO response = new responseDTO(
+            reponseLoanDTO response = new reponseLoanDTO(
                     "Error",
-                    "");
+                    "La fecha de prestamo no puede ser mayor a la fecha actual",
+                    null);
             return response;
         }
 
         // añadir las n condiciones
 
         ILoanRepository.save(loan);
-        responseDTO response = new responseDTO(
+        reponseLoanDTO response = new reponseLoanDTO(
                 "OK",
-                "Se registró correctamente");
+                "Se registró correctamente",
+                loan);
         return response;
+    
         // return true;
     }
         public responseDTO delete(int id) {
