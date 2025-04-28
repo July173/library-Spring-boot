@@ -56,6 +56,7 @@ const AddLoanUserForm = ({ onSuccess, onClose }) => {
 
         const response = await loanResponse.json();
         const newLoan = response ["loan"];
+        console.log("Nuevo préstamo creado:", newLoan);
 
         // 2. Crear la relación con el usuario
         const userLoanResponse = await fetch("http://localhost:8080/api/v1/user_loan/", {

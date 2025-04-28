@@ -38,15 +38,33 @@ const UpdateForm = ({ apiUrl, fields, item, idKey = "id", onSuccess, onCancel })
       {fields.map((field) => (
         <div key={field.name}>
           <label className="block text-sm font-medium mb-1">{field.label}</label>
-          <input
-            type={field.type || "text"}
-            name={field.name}
-            required={field.required}
-            value={formData[field.name] || ""}
-            onChange={handleChange}
-            disabled={field.disabled}
-            className="w-full p-2 border border-gray-300 rounded bg-white disabled:opacity-70"
-          />
+          {field.type === "select" ? (
+            <select
+              name={field.name}
+              required={field.required}
+              value={formData[field.name] || ""}
+              onChange={handleChange}
+              disabled={field.disabled}
+              className="w-full p-2 border border-gray-300 rounded bg-white disabled:opacity-70"
+            >
+              {field.options?.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <input
+              type={field.type || "text"}
+              name={field.name}
+              required={field.required}
+              value={formData[field.name] || ""}
+              onChange={handleChange}
+              disabled={field.disabled}
+              className="w-full p-2 border border-gray-300 rounded bg-white disabled:opacity-70"
+            />
+          )}
+
 
         </div>
       ))}

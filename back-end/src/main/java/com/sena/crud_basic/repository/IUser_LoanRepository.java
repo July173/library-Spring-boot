@@ -11,6 +11,11 @@ public interface IUser_LoanRepository extends JpaRepository<user_loanDTO,Integer
      @Query("SELECT ul FROM user_loan ul WHERE ul.status=1")
     List<user_loanDTO> findAllUserLoanActive();
 
+    @Query("SELECT ul FROM user_loan ul WHERE ul.loan.id_loan = :id_loan")
+    user_loanDTO findByIdLoan(int id_loan);
+
+    @Query("SELECT ul FROM user_loan ul WHERE ul.id_user_loan = :id_user_loan")
+    user_loanDTO findByIdUserLoan(int id);
     
 
 }
