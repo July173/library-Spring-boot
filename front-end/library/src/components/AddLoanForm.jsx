@@ -39,7 +39,6 @@ const AddLoanUserForm = ({ onSuccess, onClose }) => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              
                 date_return: formData.date_return,
                 state_loan: "En préstamo",
                 status: 1, // automático
@@ -53,81 +52,135 @@ const AddLoanUserForm = ({ onSuccess, onClose }) => {
             return;
         }
 
-
         const response = await loanResponse.json();
-        const newLoan = response ["loan"];
+        const newLoan = response["loan"];
+        console.log("Nuevo préstamo creado:", newLoan);
 
         // 2. Crear la relación con el usuario
         const userLoanResponse = await fetch("http://localhost:8080/api/v1/user_loan/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                user: { id_user: parseInt(formData.id_user) },   // 👈 correcto ahora
-                loan: { id_loan: newLoan.id_loan },              // 👈 correcto ahora
+                user: { id_user: parseInt(formData.id_user) },
+                loan: { id_loan: newLoan.id_loan },
                 state: "Activo",
                 status: 1,
                 observations: formData.observations || "Sin observaciones"
-              })
-              
+            })
         });
-
 
         if (!userLoanResponse.ok) {
             alert("Error creando user_loan");
             return;
         }
 
-        onSuccess(newLoan); // Puedes mejorar esto si quieres datos combinados
+        onSuccess(newLoan);
         onClose();
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white p-4 rounded-xl shadow-md w-full max-w-xl">
-            <h2 className="text-2xl font-bold mb-4">Add Loan</h2>
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+            <div className="bg-white p-4 rounded-xl shadow-md w-full max-w-xl">
+                <h2 className="text-2xl font-bold mb-4">Add Loan</h2>
 
+                <form onSubmit={handleSubmit}>
+                    <label className="block mb-2">
+                        Date Return <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="date"
+                        name="date_return"
+                        required
+                        className="w-full mb-4 border p-2 rounded"
+                        value={formData.date_return}
+                        onChange={handleChange}
+                        min={new Date().toISOString().split("T")[0]} // Establece la fecha mínima como hoy
+                    />
 
-            <label className="block mb-2">Date Return</label>
-            <input type="date" name="date_return" required className="w-full mb-4 border p-2 rounded"
-                value={formData.date_return} onChange={handleChange} />
+                    <label className="block mb-2">
+                        Employee <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                        name="id_employee"
+                        required
+                        className="w-full mb-4 border p-2 rounded"
+                        value={formData.id_employee}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select employee</option>
+                        {employees.map(emp => (
+                            <option key={emp.id_employee} value={emp.id_employee}>
+                                {emp.name} - {emp.position}
+                            </option>
+                        ))}
+                    </select>
 
-            
+                    <label className="block mb-2">
+                        Book <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                        name="id_book"
+                        required
+                        className="w-full mb-4 border p-2 rounded"
+                        value={formData.id_book}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select book</option>
+                        {books.map(book => (
+                            <option key={book.id_book} value={book.id_book}>
+                                {book.title} - {book.author}
+                            </option>
+                        ))}
+                    </select>
 
-            <label className="block mb-2">Employee</label>
-            <select name="id_employee" required className="w-full mb-4 border p-2 rounded"
-                value={formData.id_employee} onChange={handleChange}>
-                <option value="">Select employee</option>
-                {employees.map(emp => (
-                    <option key={emp.id_employee} value={emp.id_employee}>{emp.name} - {emp.position}</option>
-                ))}
-            </select>
+                    <label className="block mb-2">
+                        User <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                        name="id_user"
+                        required
+                        className="w-full mb-4 border p-2 rounded"
+                        value={formData.id_user}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select user</option>
+                        {users.map(user => (
+                            <option key={user.id_user} value={user.id_user}>
+                                {user.name} {user.last_name}
+                            </option>
+                        ))}
+                    </select>
 
-            <label className="block mb-2">Book</label>
-            <select name="id_book" required className="w-full mb-4 border p-2 rounded"
-                value={formData.id_book} onChange={handleChange}>
-                <option value="">Select book</option>
-                {books.map(book => (
-                    <option key={book.id_book} value={book.id_book}>{book.title} - {book.author}</option>
-                ))}
-            </select>
+                    <label className="block mb-2">
+                        Observations <span className="text-red-500">*</span>
+                    </label>
+                    <textarea
+                        name="observations"
+                        className="w-full mb-4 border p-2 rounded"
+                        value={formData.observations}
+                        onChange={handleChange}
+                        placeholder="Optional..."
+                        required
+                    />
 
-            <label className="block mb-2">User</label>
-            <select name="id_user" required className="w-full mb-4 border p-2 rounded"
-                value={formData.id_user} onChange={handleChange}>
-                <option value="">Select user</option>
-                {users.map(user => (
-                    <option key={user.id_user} value={user.id_user}>{user.name} {user.last_name}</option>
-                ))}
-            </select>
-
-            <label className="block mb-2">Observations</label>
-            <textarea name="observations" className="w-full mb-4 border p-2 rounded"
-                value={formData.observations} onChange={handleChange} placeholder="Optional..." />
-
-            <div className="flex justify-end gap-2">
-                <button type="button" onClick={onClose} className="bg-gray-400 text-white px-4 py-2 rounded">Cancel</button>
-                <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">Save</button>
+                    <div className="flex justify-end gap-2">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="bg-gray-400 text-white px-4 py-2 rounded"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="bg-green-600 text-white px-4 py-2 rounded"
+                        >
+                            Save
+                        </button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     );
 };
 

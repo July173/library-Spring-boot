@@ -17,29 +17,31 @@ export const Books = () => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [itemToUpdate, setItemToUpdate] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [loading, setLoading] = useState(false); // Estado de carga
 
   const fields = [
-
-    { name: "title", label: "Título", required: true },
-    { name: "author", label: "Autor", required: true },
-    { name: "publisher", label: "Editorial" },
-    { name: "description", label: "Descripción" },
-    { name: "isbn", label: "ISBN", type: "number" },
-    { name: "stock", label: "Stock", type: "number" },
-    { name: "url", label: "URL Imagen" },
+    { name: "title", label: "Title", required: true },
+    { name: "author", label: "Author", required: true },
+    { name: "publisher", label: "Publisher", required: true },
+    { name: "description", label: "Description", required: true },
+    { name: "isbn", label: "ISBN", type: "number", required: true },
+    { name: "stock", label: "Stock", type: "number", required: true },
+    { name: "url", label: "URL imagen", required: true },
   ];
-  data
-  itemToUpdate
-  showUpdateForm
-
+data
   const fetchData = () => {
+    setLoading(true); // Empieza la carga
     fetch(apiUrl)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
         setMergedData(data);
+        setLoading(false); // Termina la carga
       })
-      .catch((error) => console.error("Error al obtener datos:", error));
+      .catch((error) => {
+        console.error("Error getting data:", error);
+        setLoading(false); // Termina la carga incluso si hay error
+      });
   };
 
   useEffect(() => {
@@ -50,15 +52,13 @@ export const Books = () => {
     setItemToDelete(item);
     setShowModal(true);
   };
+
   // Función para recargar la página y hacer fetch a la API
   const handleReload = () => {
     fetchData(); // Recarga los datos desde la API
   };
 
   const confirmDelete = () => {
-    // Verifica que el id esté siendo recibido correctamente
-    console.log("Item to delete:", itemToDelete);
-
     if (itemToDelete && itemToDelete.id_book) {
       fetch(`${apiUrl}${itemToDelete.id_book}`, {
         method: "DELETE",
@@ -68,35 +68,32 @@ export const Books = () => {
             setMergedData((prev) =>
               prev.filter((d) => d.id_book !== itemToDelete.id_book)
             );
-            setSuccessMessage("Libro eliminado correctamente.");
+            setSuccessMessage("Book successfully deleted.");
             setTimeout(() => setSuccessMessage(""), 3000);
           } else {
-            console.error("Error al eliminar.");
+            console.error(" Error deleting.");
           }
           setShowModal(false);
           setItemToDelete(null);
         })
         .catch((error) => {
-          console.error("Error en la eliminación:", error);
+          console.error("Error in deletion: ", error);
           setShowModal(false);
           setItemToDelete(null);
         });
     } else {
-      console.error("ID no encontrado en el libro.");
+      console.error("ID not found in the book..");
     }
   };
+
   const handleEditClick = (item) => {
-    console.log("Item to edit:", item);  // Verifica si el objeto es el correcto
     setItemToUpdate(item);
     setShowUpdateForm(true);
   };
 
-
-
   // Función para manejar el filtro
   const handleFilter = (filteredData) => {
-    setMergedData(filteredData); // Actualizamos los datos con los resultados del filtro
-
+    setMergedData(filteredData);
   };
 
   return (
@@ -120,7 +117,7 @@ export const Books = () => {
             onSuccess={() => {
               fetchData();
               setShowAddForm(false);
-              setSuccessMessage("Libro agregado correctamente.");
+              setSuccessMessage("Book added successfully.");
               setTimeout(() => setSuccessMessage(""), 3000);
             }}
             onClose={() => setShowAddForm(false)}
@@ -137,21 +134,31 @@ export const Books = () => {
         <ReloadButton onReload={handleReload} />
       </div>
 
-      
+      {/* Mostrar indicador de carga */}
+      {loading && (
+        <div className="flex justify-center mt-4">
+          <div className="text-center text-gray-500">Searching...</div>
+        </div>
+      )}
+
       <div className="flex flex-wrap ml-16 gap-4 p-2 mt-6">
         {mergedData.length === 0 ? (
           <p className="text-center text-gray-500 text-lg w-full">
-            No hay libros disponibles.
+            There are no books available.
           </p>
         ) : (
-          mergedData.map((item) => (
-            <Card
-              key={item.id_book}
-              data={item}
-              onDelete={handleDeleteClick}
-              onEdit={handleEditClick}
-            />
-          ))
+          mergedData.map((item) => {
+            const { id_book, title, author, publisher, description, isbn, stock, url } = item;
+
+            return (
+              <Card
+                key={id_book}
+                data={{ id_book, title, author, publisher, description, isbn, stock, url }}
+                onDelete={handleDeleteClick}
+                onEdit={handleEditClick}
+              />
+            );
+          })
         )}
       </div>
 
@@ -162,37 +169,35 @@ export const Books = () => {
         item={itemToDelete}
       />
 
-      {showUpdateForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4">Actualizar libro</h2>
-            <UpdateForm
-              apiUrl={apiUrl}
-              fields={[
-                { name: "title", label: "Título", required: true },
-                { name: "author", label: "Autor", required: true },
-                { name: "publisher", label: "Editorial", required: true },
-                { name: "description", label: "Descripción", required: true },
-                { name: "isbn", label: "ISBN", type: "number", required: true, disabled: true },
-                { name: "stock", label: "Stock", type: "number", required: true },
-                { name: "state_book", label: "Estado del libro", type: "number", required: true },
-                { name: "url", label: "Imagen (URL)", required: true },
-              ]}
-              item={{ ...itemToUpdate, status: 1 }}
-              idKey="id_book"
-              onSuccess={() => {
-                fetchData();
-                setShowUpdateForm(false);
-                setItemToUpdate(null);
-              }}
-              onCancel={() => {
-                setShowUpdateForm(false);
-                setItemToUpdate(null);
-              }}
-            />
-          </div>
-        </div>
-      )}
+{showUpdateForm && (
+  <div>
+    <UpdateForm
+      apiUrl={apiUrl}
+      fields={[
+        { name: "title", label: "Title", required: true },
+        { name: "author", label: "Author", required: true },
+        { name: "publisher", label: "Publisher", required: true },
+        { name: "description", label: "Description", required: true },
+        { name: "url", label: "Img (URL)", required: true },
+      ]}
+      item={{ ...itemToUpdate, status: 1 }}
+      idKey="id_book"
+      onSuccess={() => {
+        fetchData();
+        setSuccessMessage("Update successfully.");
+        setTimeout(() => setSuccessMessage(""), 3000); // El mensaje desaparecerá después de 3 segundos.
+        setShowUpdateForm(false);
+        setItemToUpdate(null);
+      }}
+      onCancel={() => {
+        setShowUpdateForm(false);
+        setItemToUpdate(null);
+      }}
+    />
+  </div>
+)}
+
+
 
     </div>
   );

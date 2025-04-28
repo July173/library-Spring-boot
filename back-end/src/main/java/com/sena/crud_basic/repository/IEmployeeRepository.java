@@ -10,7 +10,7 @@ public interface IEmployeeRepository extends JpaRepository<employeeDTO,Integer> 
      @Query("SELECT e FROM employee e WHERE e.status=1")
     List<employeeDTO> findAllEmployeeActive();
  
-    @Query("SELECT e FROM employee e WHERE e.name LIKE %?1%")
+    @Query("SELECT e FROM employee e WHERE e.name LIKE %?1% AND e.status=1")
     List<employeeDTO> search(String filter);
     
 }

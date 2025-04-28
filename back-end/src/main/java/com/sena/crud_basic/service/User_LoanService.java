@@ -32,9 +32,9 @@ public class User_LoanService {
         // return true;
     }
 
-       public responseDTO delete(int id) {
+       public responseDTO deleteByIdLoan(int id) {
         // IBookRepository.deleteById(id);
-        user_loanDTO user_loan = getUserLoanById(id);
+        user_loanDTO user_loan = IUser_LoanRepository.findByIdLoan(id);
         user_loan.setStatus(0);
         IUser_LoanRepository.save(user_loan);
         responseDTO response = new responseDTO(
@@ -42,4 +42,13 @@ public class User_LoanService {
                 "Se eliminó correctamente");
         return response;
     }
+       public responseDTO delete(int id) {
+        user_loanDTO user_loan = IUser_LoanRepository.findByIdUserLoan(id);
+        user_loan.setStatus(0);
+        IUser_LoanRepository.save(user_loan);
+        responseDTO response = new responseDTO(
+                "OK",
+                "Se eliminó correctamente");
+        return response;
+       }
 }

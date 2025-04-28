@@ -18,7 +18,7 @@ export const Users = () => {
   const [showForm, setShowForm] = useState(false);
 
   const apiUrl = "http://localhost:8080/api/v1/user/";
-
+data
   const fields = [
     { name: "name", label: "Name", required: true },
     { name: "last_name", label: "Last Name", required: true },
@@ -27,55 +27,65 @@ export const Users = () => {
     { name: "email", label: "Email", required: true },
   ];
 
-  const fetchData = () => {
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setMergedData(data);
-      })
-      .catch((error) => console.error("Error al obtener datos:", error));
+  const fetchData = async () => {
+    try {
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+      setData(data);
+      setMergedData(data);
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const handleReload = () => {
-    fetchData();
+  const handleReload = async () => {
+    await fetchData(); // Ahora es asíncrona
   };
-
   const handleDeleteClick = (item) => {
     setItemToDelete(item);
     setShowModal(true);
   };
 
   const confirmDelete = () => {
-    fetch(`${apiUrl}${itemToDelete.id_user}`, {
-      method: "DELETE",
-    })
-      .then((res) => {
-        if (res.ok) {
-          setData(data.filter((d) => d.id_user !== itemToDelete.id_user));
-          setSuccessMessage("Usuario eliminado correctamente.");
-          setTimeout(() => setSuccessMessage(""), 3000);
-        } else {
-          console.error("Error al eliminar.");
-        }
-        setShowModal(false);
-        setItemToDelete(null);
+    if (itemToDelete && itemToDelete.id_user) {
+      fetch(`${apiUrl}${itemToDelete.id_user}`, {
+        method: "DELETE",
       })
-      .catch((error) => {
-        console.error("Error en la eliminación:", error);
-        setShowModal(false);
-        setItemToDelete(null);
-      });
+        .then((res) => {
+          if (res.ok) {
+            // Actualizar tanto data como mergedData
+            setMergedData((prev) =>
+              prev.filter((d) => d.id_user !== itemToDelete.id_user)
+            );
+            setData((prev) =>
+              prev.filter((d) => d.id_user !== itemToDelete.id_user)
+            );
+            setSuccessMessage("User successfully deleted.");
+            setTimeout(() => setSuccessMessage(""), 3000);
+          } else {
+            console.error("Error deleting.");
+          }
+          setShowModal(false);
+          setItemToDelete(null);
+        })
+        .catch((error) => {
+          console.error("Error in deletion:", error);
+          setShowModal(false);
+          setItemToDelete(null);
+        });
+    } else {
+      console.error("ID not found for the user.");
+    }
   };
-
   const handleFormSuccess = (newUser) => {
     const userWithStatus = { ...newUser, status: 1 };
-    setData([...data, userWithStatus]);
-    setSuccessMessage("Usuario agregado correctamente.");
+   fetchData(); // Actualiza los datos después de agregar un nuevo usuario
+    setData((prev) => [...prev, userWithStatus]);
+    setSuccessMessage("User added successfully.");
     setTimeout(() => setSuccessMessage(""), 3000);
     setShowForm(false);
   };
@@ -102,10 +112,9 @@ export const Users = () => {
       </div>
 
       {successMessage && (
-        <p className="font-semibold text-center mb-4 text-3xl">
-          {successMessage}
-        </p>
+        <div className="text-green-700 text-center mt-4">{successMessage}</div>
       )}
+
 
       {showForm && (
         <div className="flex justify-center mt-4">
@@ -138,25 +147,24 @@ export const Users = () => {
       />
 
       {showUpdateForm && itemToUpdate && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4">Actualizar Usuario</h2>
-            <UpdateForm
-              apiUrl={apiUrl}
-              fields={fields}
-              item={{ ...itemToUpdate, status: 1 }}
-              idKey="id_user"
-              onSuccess={() => {
-                fetchData();
-                setShowUpdateForm(false);
-                setItemToUpdate(null);
-              }}
-              onCancel={() => {
-                setShowUpdateForm(false);
-                setItemToUpdate(null);
-              }}
-            />
-          </div>
+        <div>
+          <UpdateForm
+            apiUrl={apiUrl}
+            fields={fields}
+            item={{ ...itemToUpdate, status: 1 }}
+            idKey="id_user"
+            onSuccess={() => {
+              fetchData();
+              setShowUpdateForm(false);
+              setItemToUpdate(null);
+              setSuccessMessage("User updated successfully."); // Mensaje de éxito
+              setTimeout(() => setSuccessMessage(""), 3000); // Limpiar el mensaje después de 3 segundos
+            }}
+            onCancel={() => {
+              setShowUpdateForm(false);
+              setItemToUpdate(null);
+            }}
+          />
         </div>
       )}
     </div>
