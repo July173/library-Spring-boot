@@ -11,26 +11,32 @@ const SearchFilter = ({ apiUrl, onFilter }) => {
         .then((data) => {
           onFilter(data); // Llamamos al callback 'onFilter' para pasar los datos filtrados al componente principal
         })
-        .catch((error) => console.error('Error al obtener datos filtrados:', error));
+        .catch((error) => console.error('Error to get dates :', error));
     } else {
-      console.log('Filtro vacío');
+      console.log('void filter');
     }
   };
-
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+        handleSearch();
+    }
+}
   return (
+  
     <div className="mx-auto mt-5 rounded-lg max-w-[35rem] w-full bg-amber-50 h-8 flex items-center">
       <input
         type="text"
-        placeholder="Buscar..."
+        placeholder="Search..."
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
         className="w-full h-8 p-2 rounded-l-lg border-none"
+        onKeyDown={handleKeyPress}
       />
       <button
         onClick={handleSearch}
         className="text-white p-2 rounded-r-lg hover:bg-orange-200"
       >
-        <img src={buscar} alt="buscar" className="w-6 h-6" />
+        <img src={buscar} alt="Search" className="w-6 h-6" />
       </button>
     </div>
   );

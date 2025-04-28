@@ -24,7 +24,7 @@ const SearchFilter = ({ apiUrl, onFilter }) => {
             .then((data) => {
                 onFilter(data); // Enviar los datos filtrados a la función onFilter
             })
-            .catch((error) => console.error('Error al obtener datos filtrados:', error));
+            .catch((error) => console.error('Error to get dates :', error));
     };
     
 
@@ -86,7 +86,7 @@ const SearchFilter = ({ apiUrl, onFilter }) => {
                         onClick={handleSearch}
                         className="bg-[#883429] text-white p-2 rounded-lg hover:bg-orange-200 flex items-center justify-center"
                     >
-                        <img src={buscar} alt="buscar" className="w-6 h-6" />
+                        <img src={buscar} alt="search" className="w-6 h-6" />
                     </button>
                 </div>
             </div>

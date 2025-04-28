@@ -114,9 +114,9 @@ public class LoanService {
                 return new responseDTO("Error", "No se encontró el libro");
             }
             bookDTO book = optionalBook.get();
-            if (previousState.equals("En prestamo") && newState.equals("Devuelto")) {
+            if (previousState.equals("On Loan") && newState.equals("Return")) {
                 book.setStock(book.getStock() + 1);
-            } else if (previousState.equals("Devuelto") && newState.equals("En prestamo")) {
+            } else if (previousState.equals("Return") && newState.equals("On Loan")) {
                 book.setStock(book.getStock() - 1);
             }
             IBookRepository.save(book);

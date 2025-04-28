@@ -35,7 +35,7 @@ const Card = ({ data, onDelete, onEdit }) => {
           <div className="p-4 overflow-y-auto">
             {Object.entries(data).map(([key, value]) =>
               key.toLowerCase().startsWith("id") || key === "url" ? null : (
-                <p key={key} className="text-sm font-bold text-black mb-1">
+                <p key={key} className="text-lg font-bold text-black mb-1">
                   {formatKey(key)}:{" "}
                   <span className="font-normal">{value}</span>
                 </p>

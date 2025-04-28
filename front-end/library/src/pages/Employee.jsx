@@ -18,29 +18,30 @@ export const Employee = () => {
   const [showForm, setShowForm] = useState(false);
 
   const apiUrl = "http://localhost:8080/api/v1/employee/";
-
+  data
   const fields = [
     { name: "name", label: "Name", required: true },
     { name: "position", label: "Position", required: true },
     { name: "phone_number", label: "Phone Number", type: "number", required: true },
   ];
 
-  const fetchData = () => {
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setMergedData(data);
-      })
-      .catch((error) => console.error("Error al obtener datos:", error));
+  const fetchData = async () => {
+    try {
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+      setData(data);
+      setMergedData(data);
+    } catch (error) {
+      console.error("Error al obtener datos:", error);
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const handleReload = () => {
-    fetchData();
+  const handleReload = async () => {
+    await fetchData(); // Ahora es asíncrona
   };
 
   const handleDeleteClick = (item) => {
@@ -49,31 +50,42 @@ export const Employee = () => {
   };
 
   const confirmDelete = () => {
-    fetch(`${apiUrl}${itemToDelete.id_employee}`, {
-      method: "DELETE",
-    })
-      .then((res) => {
-        if (res.ok) {
-          setData(data.filter((d) => d.id_employee !== itemToDelete.id_employee));
-          setSuccessMessage("Empleado eliminado correctamente.");
-          setTimeout(() => setSuccessMessage(""), 3000);
-        } else {
-          console.error("Error al eliminar.");
-        }
-        setShowModal(false);
-        setItemToDelete(null);
+    if (itemToDelete && itemToDelete.id_employee) {
+      fetch(`${apiUrl}${itemToDelete.id_employee}`, {
+        method: "DELETE",
       })
-      .catch((error) => {
-        console.error("Error en la eliminación:", error);
-        setShowModal(false);
-        setItemToDelete(null);
-      });
+        .then((res) => {
+          if (res.ok) {
+            // Actualizar tanto data como mergedData
+            setMergedData((prev) =>
+              prev.filter((d) => d.id_employee !== itemToDelete.id_employee)
+            );
+            setData((prev) =>
+              prev.filter((d) => d.id_employee !== itemToDelete.id_employee)
+            );
+            setSuccessMessage("Employee successfully deleted.");
+            setTimeout(() => setSuccessMessage(""), 3000);
+          } else {
+            console.error("Error deleting employee.");
+          }
+          setShowModal(false);
+          setItemToDelete(null);
+        })
+        .catch((error) => {
+          console.error("Error in deletion:", error);
+          setShowModal(false);
+          setItemToDelete(null);
+        });
+    } else {
+      console.error("ID not found for the employee.");
+    }
   };
 
   const handleFormSuccess = (newEmployee) => {
     const employeeWithStatus = { ...newEmployee, status: 1 };
-    setData([...data, employeeWithStatus]);
-    setSuccessMessage("Empleado agregado correctamente.");
+    fetchData(); // Actualiza los datos después de agregar un nuevo empleado
+    setData((prev) => [...prev, employeeWithStatus]);
+    setSuccessMessage("Employee added successfully.");
     setTimeout(() => setSuccessMessage(""), 3000);
     setShowForm(false);
   };
@@ -100,9 +112,7 @@ export const Employee = () => {
       </div>
 
       {successMessage && (
-        <p className="font-semibold text-center mb-4 text-3xl">
-          {successMessage}
-        </p>
+        <div className="text-green-700 text-center mt-4">{successMessage}</div>
       )}
 
       {showForm && (
@@ -138,7 +148,7 @@ export const Employee = () => {
       {showUpdateForm && itemToUpdate && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4">Actualizar Empleado</h2>
+            <h2 className="text-xl font-bold mb-4">Update Employee</h2>
             <UpdateForm
               apiUrl={apiUrl}
               fields={fields}
@@ -148,6 +158,8 @@ export const Employee = () => {
                 fetchData();
                 setShowUpdateForm(false);
                 setItemToUpdate(null);
+                setSuccessMessage("Employee updated successfully."); // Mensaje de éxito
+                setTimeout(() => setSuccessMessage(""), 3000); // Limpiar el mensaje después de 3 segundos
               }}
               onCancel={() => {
                 setShowUpdateForm(false);
