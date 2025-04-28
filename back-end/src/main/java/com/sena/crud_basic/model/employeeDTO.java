@@ -50,11 +50,11 @@ public class employeeDTO {
         this.position = position;
     }
 
-    public long getPhone_number() {
+    public Long getPhone_number() {
         return phone_number;
     }
 
-    public void setPhone_number(long phone_number) {
+    public void setPhone_number(Long phone_number) {
         this.phone_number = phone_number;
     }
 
@@ -66,7 +66,7 @@ public class employeeDTO {
         this.status = status;
     }
 
-    public employeeDTO(int id_employee, String name, String position, long phone_number, int status) {
+    public employeeDTO(int id_employee, String name, String position, Long phone_number, int status) {
         this.id_employee = id_employee;
         this.name = name;
         this.position = position;

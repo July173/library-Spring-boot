@@ -27,31 +27,55 @@ public class BookService {
     }
 
     public responseDTO save(bookDTO book) {
-        if (book.getTitle().length() < 1 || book.getTitle().length() > 255) {
-            responseDTO response = new responseDTO(
+        // Validar que el título no sea vacío
+        if (book.getTitle() == null || book.getTitle().trim().isEmpty()) {
+            return new responseDTO(
                     "Error",
-                    "El titulo debe tener una longitud entre 1 y 255 caracteres");
-            return response;
+                    "El título no puede estar vacío");
         }
-    
-        // ✅ Validación de longitud del ISBN (13 dígitos exactos)
-        long isbn = book.getIsbn();
-        if (isbn < 1000000000000L || isbn > 9999999999999L) {
-            responseDTO response = new responseDTO(
+
+        // Validar que el autor no sea vacío
+        if (book.getAuthor() == null || book.getAuthor().trim().isEmpty()) {
+            return new responseDTO(
                     "Error",
-                    "El ISBN debe tener exactamente 13 dígitos");
-            return response;
+                    "El autor no puede estar vacío");
         }
-    
-        // añadir las n condiciones
-    
+
+        // Validar que el editor no sea vacío
+        if (book.getPublisher() == null || book.getPublisher().trim().isEmpty()) {
+            return new responseDTO(
+                    "Error",
+                    "El editor no puede estar vacío");
+        }
+
+        // Validar que la descripción no sea vacía
+        if (book.getDescription() == null || book.getDescription().trim().isEmpty()) {
+            return new responseDTO(
+                    "Error",
+                    "La descripción no puede estar vacía");
+        }
+
+        // Validar que el ISBN no sea vacío y tenga 13 dígitos
+        if (book.getIsbn() <= 0 || String.valueOf(book.getIsbn()).length() != 13) {
+            return new responseDTO(
+                    "Error",
+                    "El ISBN debe tener exactamente 13 dígitos y no puede estar vacío");
+        }
+
+        // Validar que el stock no sea negativo
+        if (book.getStock() < 0) {
+            return new responseDTO(
+                    "Error",
+                    "El stock no puede ser negativo");
+        }
+
+        // Si todas las validaciones pasan, guardar el libro
         IBookRepository.save(book);
-        responseDTO response = new responseDTO(
+        return new responseDTO(
                 "OK",
                 "Se registró correctamente");
-        return response;
     }
-    
+
     /*
      * private int id_book;
      * private String title;
@@ -61,7 +85,7 @@ public class BookService {
      * private int isbn;
      */
 
-    public responseDTO delete(int  id) {
+    public responseDTO delete(int id) {
         // IBookRepository.deleteById(id);
         bookDTO book = getBookById(id);
         book.setStatus(0);
@@ -70,7 +94,7 @@ public class BookService {
                 "OK",
                 "Se eliminó correctamente");
         return response;
-        
+
     }
 
     public responseDTO update(bookDTO book) {
@@ -80,6 +104,7 @@ public class BookService {
                 "Se actualizó correctamente");
         return response;
     }
+
     public responseDTO update(int id, bookDTO book) {
         bookDTO bookUpdate = getBookById(id);
         bookUpdate.setTilte(book.getTitle());

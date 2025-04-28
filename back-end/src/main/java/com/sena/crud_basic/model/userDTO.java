@@ -34,7 +34,7 @@ public class userDTO {
     private String address;
 
     @Column(name = "phone_number", nullable = false, length = 20)
-    private long phone_number;
+    private Long phone_number;
 
     @Column(name = "email", nullable = false, length = 120)
     private String email;
@@ -87,11 +87,11 @@ public class userDTO {
         this.email = email;
     }
 
-    public long getPhone_number() {
+    public Long getPhone_number() {
         return phone_number;
     }
 
-    public void setPhone_number(long phone_number) {
+    public void setPhone_number(Long phone_number) {
         this.phone_number = phone_number;
     }
 
@@ -103,7 +103,7 @@ public class userDTO {
         this.status = status;
     }
 
-    public userDTO(int id_user, String name, String last_name, String address, long phone_number, String email,
+    public userDTO(int id_user, String name, String last_name, String address, Long phone_number, String email,
             int status) {
         this.id_user = id_user;
         this.name = name;
