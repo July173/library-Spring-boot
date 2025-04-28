@@ -20,16 +20,39 @@ public class User_LoanService {
     }
 
     public responseDTO save(user_loanDTO user_loan) {
-      
+        // Validar que el usuario no sea nulo
+        if (user_loan.getUser() == null || user_loan.getUser().getId_user() == 0) {
+            return new responseDTO(
+                    "Error",
+                    "El usuario no puede estar vacío");
+        }
 
-        // añadir las n condiciones
+        // Validar que el préstamo no sea nulo
+        if (user_loan.getLoan() == null || user_loan.getLoan().getId_loan() == 0) {
+            return new responseDTO(
+                    "Error",
+                    "El préstamo no puede estar vacío");
+        }
 
+        // Validar que el estado no sea nulo o vacío
+        if (user_loan.getState() == null || user_loan.getState().trim().isEmpty()) {
+            return new responseDTO(
+                    "Error",
+                    "El estado no puede estar vacío");
+        }
+
+        // Validar que las observaciones no sean nulas
+        if (user_loan.getObservations() == null || user_loan.getObservations().trim().isEmpty()) {
+            return new responseDTO(
+                    "Error",
+                    "Las observaciones no pueden estar vacías");
+        }
+
+        // Si todas las validaciones pasan, guardar el registro de préstamo de usuario
         IUser_LoanRepository.save(user_loan);
-        responseDTO response = new responseDTO(
+        return new responseDTO(
                 "OK",
                 "Se registró correctamente");
-        return response;
-        // return true;
     }
 
        public responseDTO deleteByIdLoan(int id) {

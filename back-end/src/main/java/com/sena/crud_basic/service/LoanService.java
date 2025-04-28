@@ -38,17 +38,46 @@ public class LoanService {
     }
 
     public reponseLoanDTO save(loanDTO loan) {
-        if (loan.getDate_loan().isAfter(LocalDate.now())) {
-            reponseLoanDTO response = new reponseLoanDTO(
+        // Validar que la fecha de préstamo no sea nula
+        if (loan.getDate_loan() == null) {
+            return new reponseLoanDTO(
                     "Error",
-                    "La fecha de prestamo no puede ser mayor a la fecha actual",
+                    "La fecha de préstamo no puede estar vacía",
                     null);
-            return response;
         }
 
-        // añadir las n condiciones
+        // Validar que la fecha de devolución no sea nula
+        if (loan.getDate_return() == null) {
+            return new reponseLoanDTO(
+                    "Error",
+                    "La fecha de devolución no puede estar vacía",
+                    null);
+        }
 
-        // bookDTO book = loan.getId_book();
+        // Validar que el estado del préstamo no sea nulo o vacío
+        if (loan.getState_loan() == null || loan.getState_loan().trim().isEmpty()) {
+            return new reponseLoanDTO(
+                    "Error",
+                    "El estado del préstamo no puede estar vacío",
+                    null);
+        }
+
+        // Validar que el libro no sea nulo
+        if (loan.getId_book() == null || loan.getId_book().getId_book() == 0) {
+            return new reponseLoanDTO(
+                    "Error",
+                    "El libro no puede estar vacío",
+                    null);
+        }
+
+        // Validar que la fecha de préstamo no sea mayor a la fecha actual
+        if (loan.getDate_loan().isAfter(LocalDate.now())) {
+            return new reponseLoanDTO(
+                    "Error",
+                    "La fecha de préstamo no puede ser mayor a la fecha actual",
+                    null);
+        }
+
         // Buscar el libro desde el repositorio usando el ID
         Optional<bookDTO> optionalBook = IBookRepository.findById(loan.getId_book().getId_book());
         if (optionalBook.isEmpty()) {
@@ -56,20 +85,23 @@ public class LoanService {
         }
 
         bookDTO book = optionalBook.get();
-        // 🔥 Verificar que haya stock disponible
+
+        // Verificar que haya stock disponible
         if (book.getStock() <= 0) {
             return new reponseLoanDTO("Error", "No hay stock disponible para este libro", null);
         }
+
+        // Guardar el préstamo
         ILoanRepository.save(loan);
+
+        // Actualizar el stock del libro
         book.setStock(book.getStock() - 1);
         IBookRepository.save(book);
-        reponseLoanDTO response = new reponseLoanDTO(
+
+        return new reponseLoanDTO(
                 "OK",
                 "Se registró correctamente",
                 loan);
-        return response;
-
-        // return true;
     }
 
     public responseDTO delete(int id) {

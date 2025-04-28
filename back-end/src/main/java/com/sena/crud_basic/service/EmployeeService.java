@@ -26,21 +26,32 @@ public class EmployeeService {
     }
 
     public responseDTO save(employeeDTO employee) {
-        if (employee.getName().length() < 1 || employee.getName().length() > 30) {
-            responseDTO response = new responseDTO(
+        // Validar que el nombre no sea vacío y tenga una longitud entre 1 y 30 caracteres
+        if (employee.getName() == null || employee.getName().trim().isEmpty() || employee.getName().length() > 30) {
+            return new responseDTO(
                     "Error",
-                    "El nombre debe tener una longitud entre 1 y 30 caracteres");
-            return response;
+                    "El nombre no puede estar vacío y debe tener una longitud entre 1 y 30 caracteres");
         }
 
-        // añadir las n condiciones
+        // Validar que el puesto (position) no sea vacío
+        if (employee.getPosition() == null || employee.getPosition().trim().isEmpty()) {
+            return new responseDTO(
+                    "Error",
+                    "El puesto no puede estar vacío");
+        }
 
+        // Validar que el número de teléfono no sea vacío y tenga exactamente 10 dígitos
+        if (employee.getPhone_number() == null || String.valueOf(employee.getPhone_number()).length() != 10) {
+            return new responseDTO(
+                    "Error",
+                    "El número de teléfono debe tener exactamente 10 dígitos");
+        }
+
+        // Si todas las validaciones pasan, guardar el empleado
         IEmployeeRepository.save(employee);
-        responseDTO response = new responseDTO(
+        return new responseDTO(
                 "OK",
                 "Se registró correctamente");
-        return response;
-        // return true;
     }
 
     public responseDTO delete(int id) {
