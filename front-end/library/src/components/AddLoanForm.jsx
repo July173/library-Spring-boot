@@ -40,7 +40,7 @@ const AddLoanUserForm = ({ onSuccess, onClose }) => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 date_return: formData.date_return,
-                state_loan: "En préstamo",
+                state_loan: "On Loan",
                 status: 1, // automático
                 id_employee: { id_employee: parseInt(formData.id_employee) },
                 id_book: { id_book: parseInt(formData.id_book) }
