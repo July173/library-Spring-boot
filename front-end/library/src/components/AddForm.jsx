@@ -108,7 +108,7 @@ const AddForm = ({ apiUrl, fields, onSuccess, onClose }) => {
             disabled={loading}
             className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
           >
-            {loading ? "Saving..." : "Save"}
+            Save
           </button>
         </div>
       </form>

@@ -22,7 +22,6 @@ const ReloadButton = ({ onReload }) => {
       >
         {loading ? "Reloading..." : "Reload"}
       </button>
-      {loading && <p className="text-sm text-gray-500 mt-2">Reloading data...</p>} {/* Mensaje visual */}
     </div>
   );
 };

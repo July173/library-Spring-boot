@@ -137,7 +137,6 @@ data
       {/* Mostrar indicador de carga */}
       {loading && (
         <div className="flex justify-center mt-4">
-          <div className="text-center text-gray-500">Searching...</div>
         </div>
       )}
 
