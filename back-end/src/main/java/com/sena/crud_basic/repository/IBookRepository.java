@@ -16,7 +16,7 @@ public interface IBookRepository extends JpaRepository<bookDTO, Integer> {
 
     // @Query("SELECT b FROM book b WHERE b.title LIKE %?1%")
     // List<bookDTO> search(String filter);
-    @Query("SELECT b FROM book b WHERE  b.title LIKE %?1% OR b.author LIKE %?1% OR b.publisher LIKE %?1% AND b.status=1")
+    @Query("SELECT b FROM book b WHERE  b.title LIKE %?1% OR b.author LIKE %?1% OR b.publisher LIKE %?1% AND b.status=1 AND b.stock > 0")
     List<bookDTO> search(String filter);
     /*
      * example
